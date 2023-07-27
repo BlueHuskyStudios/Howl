@@ -2,15 +2,15 @@
 //  Array Extensions.swift
 //  BH Bezel Notification
 //
-//  Created by Ben Leggiero on 2017-11-10.
-//  Copyright © 2017 Ben Leggiero. All rights reserved.
+//  Created by Ky Leggiero on 2017-11-10.
+//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
 import Foundation
 
 
 
-internal extension Array where Element : AnyObject {
+internal extension Array where Element : Equatable {
     
     /// Removes the given element from this array
     ///
@@ -32,6 +32,6 @@ internal extension Array where Element : AnyObject {
     /// - Parameter element: The object whose index to find
     /// - Returns: The index of the first instance of `element`, or `nil` if it's not in this array
     func index(of element: Element) -> Int? {
-        return firstIndex(where: { $0 === element })
+        firstIndex(where: { $0 == element })
     }
 }

@@ -1,134 +1,21 @@
-                  BLUE HUSKY LICENSE 1 - PUBLIC SHARE - OPUS 2
+MIT License
 
-0: LAYMAN'S TERMS
-   This section is meant to explain the purpose of this license in Layman's
-terms, and should thusly never be seen as legally binding. This disclaimer does
-not apply to further sections of this license.
+Copyright (c) 2023 Ky Leggiero
 
-If you made this:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
- 1. This is your product and you can do what you want with it
-   a. You must make sure that if you use anyone else's stuff in it, you do so
-      with their permission, or under Fair Use
-   b. If you do include someone else's stuff, you can't claim you made that
-   c. You guarantee you're providing this product for free
- 2. You must let others do what they want with it
-   a. They still have to say you made it in the first place
-   b. You have to include this license along with your product for it to count
-   c. They have to include this license when they redistribute your product
- 3. This license is overridden by governmental laws
- 4. You're not responsible for bad things that might happen because someone
-    used your product
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-If you got this:
-
- 1. This is not your product, and you need to respect that
-   a. You must make sure that if you put anyone else's stuff in it, you do so
-      with their permission, or under Fair Use
-   b. If you do include someone else's stuff, you can't claim you made that
-   c. You are guaranteed you're getting this product for free
- 2. You can still do what you want with this
-   a. You still have to say who made it in the first place
-   b. You get all the freedoms in this license along with this product
-   c. You have to include this license when you redistribute this product
- 3. This license is overridden by governmental laws
- 4. The original creator is not responsible for bad things that might happen
-    because you used this product
-
-1: DECLARATION OF COPYRIGHT
-   This Product is copyright Ben Leggiero (c) 2017 BH-1-PS
-
-2: DEFINITIONS
- - "License": this text
- - "Product": the product with which this License was distributed, and any
-   assets necessary for its use
- - "Creator": any entity or entities who originally invented the Product,
-   withstanding related and contributing parties
- - "Licensee": any entity or entities involved in consumption of the Product
- - "Licensor": any entity or entities involved in distribution of the Product
-   and of this License
-
-3: NOTICE OF PERMISSIONS
-   Permission is hereby granted to any entity obtaining a copy of the Product,
-to use, copy, modify, host, redistribute, sublicense, sell copies of, and/or
-otherwise handle the Product, and to permit Licensees to also do so, given the
-following conditions are obeyed:
-
- - The above copyright notice and this permission notice shall be included in
-   all copies and/or substantial portions of the Product.
- - This License shall be blatantly provided, unmodified, along with the Product
- - Attribution to the Creator must be blatantly stated, modifications of the
-   Product notwithstanding
-
-4: DECLARATION OF OWNERSHIP
-   The Creator hereby declares that the Product is the intellectual property
-solely of the Creator, and of no other party. The Creator maintains that any
-intellectual property which falls under § 5.1 of this License is considered
-fair use as described in § 5.4 of this License.
-
-5: THE RIGHTS OF THE CREATOR
- 1. The Creator reserves no rights to any previously-established intellectual
-    property contained within the Product which is implicitly or explicitly
-    owned by any other entity or entities.
- 2. The Creator will not gain any profit through the creation or distribution
-    of the Product.
-   a. The Creator forfeits the right to request compensation for any use of the
-      Product which adheres to the restrictions described by this License.
- 3. The Creator reserves the right to freely create, edit, distribute, destroy,
-    or otherwise interact with the whole of, or any part of, the Product.
- 4. In the case that any entity other than the Creator claims to own
-    intellectual property contained within the Product and wishes to be
-    compensated for the use of such, the Creator reserves the right to refuse
-    such compensation as allowed by the following legal documents:
-   a. Amendment I of the United States Constitution
-   b. Article 19 of the Universal Declaration of Human Rights
-   c. 17 USC § 107 - Limitations on exclusive rights: Fair use
- 5. In cases where all of the documents listed under § 5.4 of this
-    License are not legally recognized, the Creator agrees to pay the owner of
-    the disputed intellectual property a sum which equals the proportion of the
-    prevalence that the disputed intellectual property maintains in the Product
-    out of the total sum of profits garnered by the Creator for creating the
-    Product.
- 6. The Creator reserves the right to waive any conditions of this License at
-    the Creator's discretion.
- 7. The Licensor reserves the right to edit this License at any time.
-   a. The Licensor agrees to update the Opus number of this License to
-      correspond with version changes.
-   b. The Licensor agrees to never publish two or more versions of this License
-      under the same Opus number.
- 8. In no way are any of the Creator's moral rights affected by this License
-
-6: RIGHTS AND RESTRICTIONS OF LICENSEES AND LICENSORS ("YOU")
- 1. You maintain the following rights and restrictions:
-   a. You are free to copy, distribute and transmit the work.
-     i. For any reuse or distribution, You must make clear to others the
-        License terms of the License.
-   b. You are free to adapt the work.
-     i. If You alter, transform, or build upon the Product, You may distribute
-        the resulting work only under this License.
-   c. You are free to make commercial use of the work.
-   d. You must attribute the work in the manner specified by the Creator (but
-      not in any way that suggests that the Creator endorses You or such use of
-      the work).
-   e. The Creator and any Licensors or Licensees previous to You are not
-      responsible for any changes made to the Product, or any effects arising
-      thereof.
-   f. You can be granted special rights by the Creator as described in
-      section 5.6 of the License
- 2. In no way are any of the following rights affected by the License:
-   a. The fair dealing or fair use rights afforded to You, or other applicable
-      copyright exceptions and limitations.
-   b. Rights another entity may have, either in the Product itself or in how
-      the Product is used, such as publicity or privacy rights.
-
-7: ACCORDANCE WITH THE LAW
-   The terms that make up the whole and parts of this License shall not apply
-where local, state, provincial, federal, national, or any other law prohibits
-such terms.
-
-8: DISCLAIMER
-   THE PRODUCT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED. IN NO EVENT SHALL THE CREATORS, LICENSEES, OR LICENSORS BE LIABLE FOR
-ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT,
-OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE PRODUCT OR THE
-USE OR OTHER DEALINGS IN OR WITH THE PRODUCT.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

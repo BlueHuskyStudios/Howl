@@ -2,18 +2,21 @@
 //  NSImage Extensions.swift
 //  BH Bezel Notification
 //
-//  Created by Ben Leggiero on 2017-11-10.
-//  Copyright © 2017 Ben Leggiero. All rights reserved.
+//  Created by Ky Leggiero on 2017-11-10.
+//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
 import Foundation
-import AppKit
 
 import CrossKitTypes
 
+#if canImport(AppKit)
+import AppKit
+#endif
 
 
-internal extension NativeImage {
+
+public extension NativeImage {
     static func roundedRectMask(size: NSSize, cornerRadius: CGFloat) -> NativeImage {
 
         let maskImage = NativeImage(size: size, flipped: false) { rect in

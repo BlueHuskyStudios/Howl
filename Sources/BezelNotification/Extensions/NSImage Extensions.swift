@@ -13,7 +13,7 @@ import CrossKitTypes
 
 
 
-internal extension NativeImage {
+public extension NativeImage {
     static func roundedRectMask(size: NSSize, cornerRadius: CGFloat) -> NativeImage {
 
         let maskImage = NativeImage(size: size, flipped: false) { rect in

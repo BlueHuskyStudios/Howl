@@ -130,7 +130,7 @@ public extension SystemBezelNotification {
     ///
     /// - Returns: A publisher that allows you to react to the bezel appearing & disappearing.
     ///            **You must retain this in order for the notification to show!**
-    ///            To hide the notification manually, simply cancel or deallocate it.
+    ///            To hide the notification manually, simply cancel its publisher.
     ///
     /// - SeeAlso: ``SystemBezelNotification.Parameters``
     static func show(with parameters: Parameters)
@@ -479,6 +479,25 @@ public extension SystemBezelNotification {
                          at: textBounds.origin,
                          color: parameters.messageLabelColor.withAlphaComponent(parameters.messageLabelColor.alphaComponent * 0.8),
                          font: parameters.messageLabelFont)
+        }
+    }
+}
+
+
+extension SystemBezelNotification.TimeToLive: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .short:
+            hasher.combine("\(Self.self).__PREDEFINED__.short")
+            
+        case .long:
+            hasher.combine("\(Self.self).__PREDEFINED__.long")
+            
+        case .forever:
+            hasher.combine("\(Self.self).__PREDEFINED__.forever")
+            
+        case .exactly(let seconds):
+            hasher.combine("\(Self.self).exactly(seconds: \(seconds))")
         }
     }
 }

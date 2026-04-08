@@ -23,6 +23,7 @@ import Foundation
 
 import CrossKitTypes
 import FunctionTools
+import RectangleTools
 
 
 
@@ -457,7 +458,7 @@ public extension SystemBezelNotification {
                 let messageLabelTop = textBounds.maxY;
                 let halfwayBetweenLabelTopAndBezelTop = (bezelBounds.maxY + messageLabelTop) / 2
                 
-                let iconSize = NSSize(scaling: icon.size, toFitWithin: bezelSize * 0.6, approach: .scaleProportionallyDown)
+                let iconSize = icon.size.scaled(within: bezelSize * 0.6, method: .fit, direction: .down)
                 
                 
                 let iconBottomLeftCorner = NSPoint(x: bezelCenterX - (iconSize.width / 2),

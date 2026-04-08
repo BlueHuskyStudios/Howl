@@ -7,19 +7,23 @@ let package = Package(
     name: "BlueToast",
     
     platforms: [
-//        .macOS("12"),
-//        .iOS("15"),
-        .macOS("14")
+        .macOS("14"),
+        .iOS("15"), // 15: AttributedString
     ],
     
     products: [
         .library(
             name: "BlueToast",
             targets: ["BlueToast"]),
+        .library(
+            name: "BezelNotification",
+            targets: ["BlueToast"]),
     ],
     dependencies: [
-        .package(name: "CrossKitTypes", url: "https://github.com/RougeWare/Swift-Cross-Kit-Types.git", from: "1.0.0"),
-        .package(name: "FunctionTools", url: "https://github.com/RougeWare/Swift-Function-Tools.git", from: "1.0.0"),
+        .package(name: "CrossKitTypes",  url: "https://github.com/RougeWare/Swift-Cross-Kit-Types.git", from: "1.0.0"),
+        .package(name: "FunctionTools",  url: "https://github.com/RougeWare/Swift-Function-Tools.git",  from: "2.0.0"),
+        .package(name: "RectangleTools", url: "https://github.com/RougeWare/Swift-Rectangle-Tools.git", from: "2.17.0"),
+//        .package(name: "SimpleLogging",  url: "https://github.com/RougeWare/Swift-Simple-Logging.git",  from: "0.5.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -29,6 +33,8 @@ let package = Package(
             dependencies: [
                 "CrossKitTypes",
                 "FunctionTools",
+                "RectangleTools",
+//                "SimpleLogging",
             ]),
         
         .testTarget(

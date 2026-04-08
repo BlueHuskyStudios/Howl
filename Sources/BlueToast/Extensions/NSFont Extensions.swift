@@ -6,6 +6,7 @@
 //  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 
@@ -20,3 +21,4 @@ internal extension NSFont {
         return systemFont(ofSize: systemFontSize(for: controlSize))
     }
 }
+#endif

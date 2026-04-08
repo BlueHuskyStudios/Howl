@@ -7,6 +7,7 @@
 //  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 
@@ -156,3 +157,4 @@ public extension CAMediaTimingFunction {
     static let linear = CAMediaTimingFunction(name: .linear)
     static let `default` = CAMediaTimingFunction(name: .default)
 }
+#endif

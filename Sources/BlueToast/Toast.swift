@@ -10,7 +10,6 @@ import SwiftUI
 
 import CrossKitTypes
 import FunctionTools
-import SimpleLogging
 
 
 
@@ -204,7 +203,7 @@ private struct Toast: ViewModifier {
     }
     
     
-    func _debug_infoItem<Value, Format>(_ title: String, value: Value, format: Format) -> some View
+    private func _debug_infoItem<Value, Format>(_ title: String, value: Value, format: Format) -> some View
     where Value: Equatable,
           Format: FormatStyle,
           Format.FormatInput == Value,

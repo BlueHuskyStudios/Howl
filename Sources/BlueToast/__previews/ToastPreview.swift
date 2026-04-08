@@ -9,6 +9,7 @@ import SwiftUI
 
 
 
+@available(iOS 16, *)
 internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
     
     @State
@@ -50,6 +51,7 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
 // MARK: - Background image data
 
 #if DEBUG
+@available(iOS 16, *)
 private let cgBackgroundImage: CGImage = CGImage(jpegDataProviderSource: .init(url: URL(filePath: "../") as CFURL)!, decode: nil, shouldInterpolate: false, intent: .perceptual)!
 #else
 private let cgBackgroundImage: CGImage = CGImage(width: 0, height: 0, bitsPerComponent: 0, bitsPerPixel: 0, bytesPerRow: 0, space: .init(name: CGColorSpace.genericRGBLinear)!, bitmapInfo: [], provider: .init(data: Data() as CFData)!, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!

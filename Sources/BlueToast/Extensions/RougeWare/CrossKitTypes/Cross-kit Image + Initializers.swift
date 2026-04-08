@@ -16,6 +16,7 @@ import UIKit
 #endif
 
 import CrossKitTypes
+import RectangleTools
 
 
 
@@ -35,7 +36,11 @@ public extension Image {
     
     func nativeImage() -> NativeImage? {
         let view = NoInsetHostingView(rootView: self)
-        view.setFrameSize(view.fittingSize)
+        #if canImport(AppKit)
+            view.setFrameSize(view.fittingSize)
+        #elseif canImport(UIKit)
+            view.view.frame.size = view.preferredContentSize
+        #endif
         return view.bitmapImage()
     }
 }
@@ -44,16 +49,16 @@ public extension Image {
 
 // MARK: - Private utilities
 
-private class NoInsetHostingView<V: View>: NSHostingView<V> {
+private class NoInsetHostingView<V: View>: NativeHostingView<V> {
     @inline(__always)
-    override var safeAreaInsets: NSEdgeInsets { .init() }
+    override var safeAreaInsets: OldEdgeInsets { .init() }
 }
 
 
 
-private extension NSView {
+private extension NativeView {
     
-    func bitmapImage() -> NSImage? {
+    func bitmapImage() -> NativeImage? {
         guard let rep = bitmapImageRepForCachingDisplay(in: bounds) else {
             return nil
         }
@@ -64,3 +69,15 @@ private extension NSView {
         return NSImage(cgImage: cgImage, size: bounds.size)
     }
 }
+
+
+
+#if canImport(AppKit)
+typealias NativeView = NSView
+typealias NativeHostingView<V: View> = NSHostingView<V>
+typealias OldEdgeInsets = NSEdgeInsets
+#elseif canImport(UIKit)
+typealias NativeView = UIView
+typealias NativeHostingView<V: View> = UIHostingController<V>
+typealias OldEdgeInsets = UIEdgeInsets
+#endif

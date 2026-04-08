@@ -7,9 +7,12 @@
 //
 
 import Foundation
-import AppKit
 
 import CrossKitTypes
+
+#if canImport(AppKit)
+import AppKit
+#endif
 
 
 

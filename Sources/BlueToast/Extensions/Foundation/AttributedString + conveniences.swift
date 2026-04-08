@@ -20,7 +20,7 @@ public extension AttributedString {
         else if let string = stringish as? String {
             self.init(stringLiteral: string)
         }
-        else if #available(macOS 13, *),
+        else if #available(macOS 13, iOS 16, *),
                 let lsr = stringish as? LocalizedStringResource {
             self.init(localized: lsr)
         }

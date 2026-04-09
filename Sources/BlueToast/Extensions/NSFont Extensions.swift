@@ -2,10 +2,11 @@
 //  NSFont Extensions.swift
 //  BH Bezel Notification
 //
-//  Created by Ben Leggiero on 2017-11-10.
-//  Copyright © 2017 Ben Leggiero. All rights reserved.
+//  Created by Ky Leggiero on 2017-11-10.
+//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 
@@ -20,3 +21,4 @@ internal extension NSFont {
         return systemFont(ofSize: systemFontSize(for: controlSize))
     }
 }
+#endif

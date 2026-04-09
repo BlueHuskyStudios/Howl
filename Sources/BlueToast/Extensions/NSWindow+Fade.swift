@@ -2,11 +2,12 @@
 //  NSWindow+Fade.swift
 //  BH Bezel Notification
 //
-//  Created by Ben Leggiero on 2017-11-09.
+//  Created by Ky Leggiero on 2017-11-09.
 //  Translated to Swift 4 from the original (ObjC): https://gist.github.com/indragiek/1397050
-//  Copyright © 2017 Ben Leggiero. All rights reserved.
+//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 
@@ -156,3 +157,4 @@ public extension CAMediaTimingFunction {
     static let linear = CAMediaTimingFunction(name: .linear)
     static let `default` = CAMediaTimingFunction(name: .default)
 }
+#endif

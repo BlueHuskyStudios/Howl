@@ -2,7 +2,7 @@
 //  BezelNotificationTests.swift
 //  BezelNotificationTests
 //
-//  Created by Ben Leggiero on 2017-11-10.
+//  Created by Ky Leggiero on 2017-11-10.
 //  Copyright © 2017 Blue Husky Studios. All rights reserved.
 //
 

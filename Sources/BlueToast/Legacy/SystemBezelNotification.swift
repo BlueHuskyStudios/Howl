@@ -413,7 +413,11 @@ public extension SystemBezelNotification {
             let visualEffectView = NSVisualEffectView()
             visualEffectView.wantsLayer = true
             visualEffectView.blendingMode = .behindWindow
-            visualEffectView.material = .hudWindow
+            if #available(macOS 10.14, *) {
+                visualEffectView.material = .hudWindow
+            } else {
+                visualEffectView.material = .dark
+            }
             visualEffectView.state = .active
             visualEffectView.maskImage = .roundedRectMask(size: self.parameters.size.cgSize,
                                                           cornerRadius: self.parameters.cornerRadius)

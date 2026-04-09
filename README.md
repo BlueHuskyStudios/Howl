@@ -1,3 +1,7 @@
+> BlueToast is version 3 of the BezelNotification package. Original functionality will be preserved, but future focus will be on in-window toasts.
+>
+> Version 3 is currently in **alpha testing**, meaning that some functionality works and some doesn't. Please refrain from submitting bug reports unless you're in the Blue Husky Alpha Testers group.
+
 # BlueToast
 
 Formerly (`BH`)`BezelNotification`, BlueToast is a way to present toasts in your apps across all Apple platforms.
@@ -97,6 +101,16 @@ extension ToastStyle where Self == MyToastStyle {
 ``` 
 
 All these parameters (aside from the callback) can be encapsulated in a `BezelParameters` object. This is useful for keeping pre-defned bezels, serializing them for user-customization, etc.
+
+
+## System Bezel Notifications
+
+The legace of this package is its ability to show "bezel notifications" which look exactly like the system bezel notifications.
+
+Version 3 of this package focuses more on in-app toasts, but it does indeed preserve the original functionality, just renamed from `BHBezelNotification` to `SystemBezelNotification`.
+
+![](./macOS & BezelNotification comparison.png)
+
 
 
 ## Try it out!

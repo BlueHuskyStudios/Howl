@@ -54,11 +54,15 @@ This repo comes with some premade styles to get you started!
 
 You know those square notifications macOS does when you change the volume 'n' stuff? This is like that, but you can actually use it in your projects.
 
-<img src="https://github.com/KyLeggiero/BezelNotification-Demo-App/blob/0878592d44977df5ee54300fbf145d0e1cd4923d/macOS%20&%20BezelNotification%20comparison.png?raw=true" width="736" />
+![A comparison between this package's bezel notifications and the macOS native ones. They're identical, except this package's version is more customizable.](./macOS%20%26%20BezelNotification%20comparison.png)
 
 > This does _not_ use any secret system APIs (but instead creates its own bezel notifications from scratch), so this cannot interact with nor affect macOS's own system bezel notifications.
 > 
 > This also means it can be used in App Store apps 🥳
+
+The legacy of this package is its ability to show "bezel notifications" which look exactly like the system bezel notifications.
+
+Version 3 of this package focuses more on in-app toasts, but it does indeed preserve the original functionality, just renamed from `BHBezelNotification` to `SystemBezelNotification`.
 
 
 
@@ -101,15 +105,6 @@ extension ToastStyle where Self == MyToastStyle {
 ``` 
 
 All these parameters (aside from the callback) can be encapsulated in a `BezelParameters` object. This is useful for keeping pre-defned bezels, serializing them for user-customization, etc.
-
-
-## System Bezel Notifications
-
-The legace of this package is its ability to show "bezel notifications" which look exactly like the system bezel notifications.
-
-Version 3 of this package focuses more on in-app toasts, but it does indeed preserve the original functionality, just renamed from `BHBezelNotification` to `SystemBezelNotification`.
-
-![](./macOS & BezelNotification comparison.png)
 
 
 

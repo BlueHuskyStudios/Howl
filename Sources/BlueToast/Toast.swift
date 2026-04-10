@@ -56,10 +56,21 @@ public struct ToastConfiguration {
     
     
     public struct Action {
-        let label: String
-        let userDidInteract: BlindCallback
+        fileprivate let label: String
+        fileprivate let userDidInteract: BlindCallback
+        
+        
+        public init(label: String, userDidInteract: @escaping BlindCallback) {
+            self.label = label
+            self.userDidInteract = userDidInteract
+        }
     }
 }
+
+
+
+extension ToastConfiguration.Duration: Hashable {}
+extension ToastConfiguration.Duration: CaseIterable {}
 
 
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 
 
-#if !canImport(AppKit)
+#if !os(macOS)
 @available(*, unavailable, renamed: "BezelToastStyle", message: """
     `SystemBezelToastStyle` is only available on macOS because of how it escapes the app window.
     

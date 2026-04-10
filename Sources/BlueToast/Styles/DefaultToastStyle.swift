@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-#if canImport(AppKit)
+#if os(macOS)
 public typealias DefaultToastStyle = SystemBezelToastStyle
 #else
 public typealias DefaultToastStyle = BezelToastStyle

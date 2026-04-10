@@ -135,7 +135,7 @@ private struct Toast: ViewModifier {
     private var disappearDate: Date = .distantPast
     
     @State
-    private var timerStorage: Set<AnyCancellable> = []
+    private var timerStorage: Task<Void, Never>?
     
     @Binding
     var isPresented: Bool
@@ -173,14 +173,10 @@ private struct Toast: ViewModifier {
                                 
                                 disappearDate = configuration.disappearDateIfAppearingNow()
                                 
-                                Timer.publish(every: configuration.actualDuration.inSeconds, on: .main, in: .modalPanel)
-                                    .first()
-                                    .sink { now in
-                                        if now >= disappearDate {
-                                            wrapUpDippear()
-                                        }
-                                    }
-                                    .store(in: &timerStorage)
+                                timerStorage = Task {
+                                    try? await Task.sleep(for: .seconds(configuration.actualDuration.inSeconds))
+                                    wrapUpDippear()
+                                }
                             }
                             .onDisappear {
                                 wrapUpDippear()
@@ -199,8 +195,8 @@ private struct Toast: ViewModifier {
     
     private func wrapUpDippear() {
         isPresented = false
-        timerStorage = []
-        //disappearDate = .distantPast
+        timerStorage?.cancel()
+        timerStorage = nil
     }
     
     

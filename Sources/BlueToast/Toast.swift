@@ -172,9 +172,9 @@ private struct Toast: ViewModifier {
                                 #endif
                                 
                                 disappearDate = configuration.disappearDateIfAppearingNow()
-                            }
-                            .task {
-                                Timer.publish(every: configuration.actualDuration.inSeconds / 12, on: .main, in: .modalPanel)
+                                
+                                Timer.publish(every: configuration.actualDuration.inSeconds, on: .main, in: .modalPanel)
+                                    .first()
                                     .sink { now in
                                         if now >= disappearDate {
                                             wrapUpDippear()
@@ -200,7 +200,7 @@ private struct Toast: ViewModifier {
     private func wrapUpDippear() {
         isPresented = false
         timerStorage = []
-        disappearDate = .distantPast
+        //disappearDate = .distantPast
     }
     
     

@@ -19,24 +19,24 @@ public struct ToastConfiguration {
     public let text: AttributedString
     public let duration: Duration?
     public let icon: Image?
-    public let action: Action?
+    public let callToAction: CallToAction?
     
     
-    init(text: AttributedString, duration: Duration?, icon: Image?, action: Action?) {
+    init(text: AttributedString, duration: Duration?, icon: Image?, callToAction: CallToAction?) {
         self.text = text
         self.duration = duration
         self.icon = icon
-        self.action = action
+        self.callToAction = callToAction
     }
     
     
-    init<ToastText>(text: ToastText, duration: Duration?, icon: Image?, action: Action?)
+    init<ToastText>(text: ToastText, duration: Duration?, icon: Image?, callToAction: CallToAction?)
     where ToastText: StringProtocol
     {
         self.init(text: AttributedString(text),
                   duration: duration,
                   icon: icon,
-                  action: action)
+                  callToAction: callToAction)
     }
     
     
@@ -55,8 +55,18 @@ public struct ToastConfiguration {
     
     
     
-    public struct Action {
+    /// The call-to-action widget for a toast. This is something presented to the user, providing them with an action they can take based on the toast.
+    ///
+    /// It's not guaranteed that a user will interact with a CTA. Toasts don't have to have them, but even when they do, a toast might disappear automatically or be dismissed in some other way manually. It's best **avoid assuming** the user must perform the presented action.
+    public struct CallToAction {
+        
+        /// This is presented as the user, briefly describing what action will be taken.
+        ///
+        /// It's best to keep this to one word if possible, like "Okay", "Undo", or "Dismiss".
+        /// However, styles should still make effort to display longer labels. For example, if the toast says that a pull request was successfully created on GitLab, it would be appropriate for the CTA label to say "Show in GitLab".
         public let label: String
+        
+        /// This is called when the user interacts with the CTA.
         public let userDidInteract: BlindCallback
         
         
@@ -88,10 +98,10 @@ public extension View {
         text: AttributedString,
         duration: ToastConfiguration.Duration? = nil,
         icon: Image? = nil,
-        action: ToastConfiguration.Action? = nil)
+        action: ToastConfiguration.CallToAction? = nil)
     -> some View
     {
-        modifier(Toast(isPresented: isPresented, configuration: .init(text: text, duration: duration, icon: icon, action: action)))
+        modifier(Toast(isPresented: isPresented, configuration: .init(text: text, duration: duration, icon: icon, callToAction: action)))
     }
     
     
@@ -100,7 +110,7 @@ public extension View {
         text: ToastText,
         duration: ToastConfiguration.Duration? = nil,
         icon: Image? = nil,
-        action: ToastConfiguration.Action? = nil)
+        action: ToastConfiguration.CallToAction? = nil)
     -> some View
     where ToastText: StringProtocol
     {
@@ -162,9 +172,9 @@ private struct Toast: ViewModifier {
                                 #endif
                                 
                                 disappearDate = configuration.disappearDateIfAppearingNow()
-                            }
-                            .task {
-                                Timer.publish(every: configuration.actualDuration.inSeconds / 12, on: .main, in: .modalPanel)
+                                
+                                Timer.publish(every: configuration.actualDuration.inSeconds, on: .main, in: .modalPanel)
+                                    .first()
                                     .sink { now in
                                         if now >= disappearDate {
                                             wrapUpDippear()
@@ -190,7 +200,7 @@ private struct Toast: ViewModifier {
     private func wrapUpDippear() {
         isPresented = false
         timerStorage = []
-        disappearDate = .distantPast
+        //disappearDate = .distantPast
     }
     
     

@@ -38,7 +38,7 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
 //                            .body(.init(text: "Test toast",
 //                                        duration: .criticalAlert,
 //                                        icon: nil,
-//                                        action: .init(label: "Action!", userDidInteract: null)))
+//                                        callToAction: .init(label: "Action!", userDidInteract: null)))
 ////                            .animation(.bouncy, value: show)
 //                    }
 //                }

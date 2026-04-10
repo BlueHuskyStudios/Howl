@@ -56,8 +56,8 @@ public struct ToastConfiguration {
     
     
     public struct Action {
-        fileprivate let label: String
-        fileprivate let userDidInteract: BlindCallback
+        public let label: String
+        public let userDidInteract: BlindCallback
         
         
         public init(label: String, userDidInteract: @escaping BlindCallback) {

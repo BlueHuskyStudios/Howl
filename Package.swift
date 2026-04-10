@@ -22,7 +22,7 @@ let package = Package(
     dependencies: [
         .package(name: "CrossKitTypes",  url: "https://github.com/RougeWare/Swift-Cross-Kit-Types.git", from: "1.0.0"),
         .package(name: "FunctionTools",  url: "https://github.com/RougeWare/Swift-Function-Tools.git",  from: "2.0.0"),
-        .package(name: "RectangleTools", url: "https://github.com/RougeWare/Swift-Rectangle-Tools.git", from: "2.17.0"),
+        .package(name: "RectangleTools", url: "https://github.com/RougeWare/Swift-Rectangle-Tools.git", from: "2.17.1"),
 //        .package(name: "SimpleLogging",  url: "https://github.com/RougeWare/Swift-Simple-Logging.git",  from: "0.5.2"),
     ],
     targets: [

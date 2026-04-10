@@ -25,7 +25,7 @@
         "state": {
           "branch": null,
           "revision": "c45199953ac680dfdcaefff5f8743f1126fe8a4e",
-          "version": "1.4.1"
+          "version": "2.0.1"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/RougeWare/Swift-Rectangle-Tools",
         "state": {
           "branch": null,
-          "revision": "1942e19c4f84c32fa4aca3e7aa68c724f264452f",
-          "version": "2.17.0"
+          "revision": "dd8eba41360e39c74159d7a1ef9496efc6fefc40",
+          "version": "2.17.1"
         }
       }
     ]

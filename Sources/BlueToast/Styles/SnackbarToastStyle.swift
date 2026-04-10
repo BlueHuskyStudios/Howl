@@ -19,7 +19,7 @@ public struct SnackbarToastStyle: ToastStyle {
             HStack {
                 Text(configuration.text)
                 
-                if let action = configuration.action {
+                if let action = configuration.callToAction {
                     Button(action.label, action: action.userDidInteract)
                         .buttonStyle(.link)
                 }

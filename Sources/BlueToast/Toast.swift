@@ -194,9 +194,11 @@ private struct Toast: ViewModifier {
     
     
     private func wrapUpDippear() {
-        isPresented = false
-        timerStorage?.cancel()
-        timerStorage = nil
+        withAnimation {
+            isPresented = false
+            timerStorage?.cancel()
+            timerStorage = nil
+        }
     }
     
     

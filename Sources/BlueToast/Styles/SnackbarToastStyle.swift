@@ -37,7 +37,8 @@ public struct SnackbarToastStyle: ToastStyle {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         
-        .transition(.move(edge: .bottom).animation(.bouncy))
+        .transition(.move(edge: .bottom).animation(.bouncy(duration: 0.3)))
+        .animation(.bouncy)
     }
 }
 

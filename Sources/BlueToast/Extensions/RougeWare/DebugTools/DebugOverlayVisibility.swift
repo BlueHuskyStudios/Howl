@@ -87,3 +87,12 @@ public extension DebugOverlayVisibility {
         public static var defaultValue: DebugOverlayVisibility { .hidden }
     }
 }
+
+
+
+public extension View {
+    func debugOverlay(_ visibility: DebugOverlayVisibility) -> some View {
+        self
+            .environment(\.debugOverlay, visibility)
+    }
+}

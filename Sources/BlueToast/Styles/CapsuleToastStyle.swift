@@ -29,6 +29,12 @@ public struct CapsuleToastStyle: ToastStyle {
 
 
 
+public extension ToastStyle where Self == CapsuleToastStyle {
+    static var capsule: Self { Self.init() }
+}
+
+
+
 #Preview {
     ToastPreview {
         CapsuleToastStyle()

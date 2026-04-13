@@ -32,12 +32,12 @@ public struct SnackbarToastStyle: ToastStyle {
                     .shadow(radius: 6, y: 2)
             }
             .padding()
+            .compositingGroup()
             
-            .preferredColorScheme(.dark)
+            .colorScheme(.dark)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         
-        .compositingGroup()
         .transition(.move(edge: .bottom).animation(.bouncy(duration: 0.3)))
         .animation(.bouncy)
     }

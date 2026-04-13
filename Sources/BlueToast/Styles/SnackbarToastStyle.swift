@@ -32,7 +32,7 @@ public struct SnackbarToastStyle: ToastStyle {
                     .shadow(radius: 6, y: 2)
             }
             .padding()
-            .compositingGroup()
+            .geometryGroup()
             
             .colorScheme(.dark)
         }

@@ -71,7 +71,7 @@ internal extension ToastStyle.Configuration.Duration {
     
     var inSeconds: TimeInterval {
         switch self {
-        case .actionFeedback: 2
+        case .actionFeedback: 2.5
         case .importantText: 6
         case .criticalAlert: 60 * 60 * 24 * 365.242189 // 1 year
         }

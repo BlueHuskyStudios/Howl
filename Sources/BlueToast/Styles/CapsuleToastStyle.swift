@@ -12,18 +12,42 @@ import SwiftUI
 public struct CapsuleToastStyle: ToastStyle {
     public func body(_ configuration: Configuration) -> some View {
         ZStack(alignment: .bottom) {
-            
-            Text(configuration.text)
-                .padding()
-                .background {
-                    Capsule()
-                        .fill(.ultraThinMaterial)
-                }
-            
             Rectangle()
                 .fill(.clear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            VStack {
+                Group {
+                    Text(configuration.text)
+                    
+                    if let action = configuration.callToAction {
+                        Button(action.label, action: action.userDidInteract)
+                            .buttonStyle(.link)
+                    }
+                }
+                .font(.body)
+                .padding()
+                .background {
+                    if #available(macOS 26.0, *) {
+                        Capsule()
+                            .glassEffect()
+                            .shadow(radius: 6, y: 2)
+                    }
+                    else {
+                        Capsule()
+                            .fill(.ultraThinMaterial.blendMode(.multiply))
+                            .shadow(radius: 6, y: 2)
+                    }
+                }
+                .padding()
+//                .geometryGroup()
+            }
+            
+            .colorScheme(.dark)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        
+        .transition(.move(edge: .bottom).animation(.bouncy(duration: 0.3)))
+        .animation(.bouncy)
     }
 }
 

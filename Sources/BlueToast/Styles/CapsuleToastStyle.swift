@@ -24,16 +24,23 @@ public struct CapsuleToastStyle: ToastStyle {
                         .padding(8)
                     
                     if let action = configuration.callToAction {
-                        Button(action.label, action: action.userDidInteract)
-                            .buttonStyle(.link)
-                            .padding(EdgeInsets(eachVertical: 4, eachHorizontal: 8))
+                        if #available(macOS 26, iOS 26, *) {
+                            Button(action.label, action: action.userDidInteract)
+                                .buttonStyle(.glassProminent)
+                                .buttonBorderShape(.capsule)
+                        }
+                        else {
+                            Button(action.label, action: action.userDidInteract)
+                                .buttonStyle(.link)
+                                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                        }
                     }
                 }
                 .font(.body)
                 .background {
-                    if #available(macOS 26.0, *) {
+                    if #available(macOS 26, iOS 26, *) {
                         Capsule()
-                            .glassEffect()
+                            .glassEffect(.regular.tint(.black))
                             .shadow(radius: 6, y: 2)
                     }
                     else {

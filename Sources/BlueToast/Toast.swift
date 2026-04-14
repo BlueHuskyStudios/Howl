@@ -165,7 +165,6 @@ private struct Toast: ViewModifier {
                     if isPresented {
                         AnyView(toastStyle.body(configuration))
                             .transition(.move(edge: .bottom).animation(.bouncy))
-                            .animation(.bouncy, value: isPresented)
                     }
                     
                     Rectangle()
@@ -192,6 +191,7 @@ private struct Toast: ViewModifier {
                             }
                         }
                 }
+                .animation(.bouncy, value: isPresented)
             }
     }
     

@@ -11,6 +11,8 @@ import SwiftUI
 
 public struct SnackbarToastStyle: ToastStyle {
     
+    private let shape = RoundedRectangle(cornerRadius: 8)
+    
     public func body(_ configuration: Configuration) -> some View {
         ZStack(alignment: .bottomLeading) {
             Rectangle()
@@ -27,9 +29,22 @@ public struct SnackbarToastStyle: ToastStyle {
             .font(.body)
             .padding()
             .background {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(.ultraThinMaterial.blendMode(.multiply))
-                    .shadow(radius: 6, y: 2)
+                if #available(macOS 26, iOS 26, *) {
+                    shape
+                        .glassEffect(.regular.tint(.black), in: shape)
+                        .shadow(radius: 6, y: 2)
+                }
+                else {
+                    ZStack {
+                        shape
+                            .fill(.ultraThinMaterial.blendMode(.multiply))
+                            .shadow(radius: 6, y: 2)
+                        shape
+                            .inset(by: -1)
+                            .stroke(Color(white: 0.3).blendMode(.lighten),
+                                    style: .init(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                    }
+                }
             }
             .padding()
             .geometryGroup()

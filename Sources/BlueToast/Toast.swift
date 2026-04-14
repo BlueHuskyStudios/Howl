@@ -166,6 +166,7 @@ private struct Toast: ViewModifier {
                         AnyView(toastStyle.body(configuration))
                         
                             .transition(.move(edge: .bottom).animation(.bouncy))
+                            .animation(.bouncy, value: isPresented)
                             .onAppear {
                                 #if DEBUG
                                 _debug_appearCount += 1

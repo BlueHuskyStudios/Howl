@@ -7,25 +7,29 @@
 
 import SwiftUI
 
+import RectangleTools
+
 
 
 public struct CapsuleToastStyle: ToastStyle {
+    
     public func body(_ configuration: Configuration) -> some View {
         ZStack(alignment: .bottom) {
             Rectangle()
                 .fill(.clear)
             
-            VStack {
+            HStack(spacing: 4) {
                 Group {
                     Text(configuration.text)
+                        .padding(8)
                     
                     if let action = configuration.callToAction {
                         Button(action.label, action: action.userDidInteract)
                             .buttonStyle(.link)
+                            .padding(EdgeInsets(eachVertical: 4, eachHorizontal: 8))
                     }
                 }
                 .font(.body)
-                .padding()
                 .background {
                     if #available(macOS 26.0, *) {
                         Capsule()
@@ -38,16 +42,15 @@ public struct CapsuleToastStyle: ToastStyle {
                             .shadow(radius: 6, y: 2)
                     }
                 }
-                .padding()
-//                .geometryGroup()
+                .geometryGroup()
             }
+            .padding(.bottom, 24)
             
             .colorScheme(.dark)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         
         .transition(.move(edge: .bottom).animation(.bouncy(duration: 0.3)))
-        .animation(.bouncy)
     }
 }
 

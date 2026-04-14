@@ -164,10 +164,18 @@ private struct Toast: ViewModifier {
                     
                     if isPresented {
                         AnyView(toastStyle.body(configuration))
-                        
                             .transition(.move(edge: .bottom).animation(.bouncy))
                             .animation(.bouncy, value: isPresented)
-                            .onAppear {
+                    }
+                    
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .allowsHitTesting(true)
+                    
+                    
+                        .onChange(of: isPresented) { _, isPresented in
+                            if isPresented {
                                 #if DEBUG
                                 _debug_appearCount += 1
                                 #endif
@@ -179,15 +187,10 @@ private struct Toast: ViewModifier {
                                     wrapUpDippear()
                                 }
                             }
-                            .onDisappear {
+                            else {
                                 wrapUpDippear()
                             }
-                    }
-                    
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .allowsHitTesting(true)
+                        }
                 }
             }
     }
@@ -195,7 +198,7 @@ private struct Toast: ViewModifier {
     
     
     private func wrapUpDippear() {
-        withAnimation {
+        withAnimation(.bouncy) {
             isPresented = false
             timerStorage?.cancel()
             timerStorage = nil

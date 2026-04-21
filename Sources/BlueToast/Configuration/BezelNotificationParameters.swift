@@ -73,7 +73,7 @@ public struct BezelNotificationParameters {
     var cornerRadius: CGFloat
     
     /// The tint of the bezel notification's background
-    var backgroundTint: NativeColor
+    var rawBackgroundTint: NativeColor
     
     /// The distance from the bottom of the bezel notification's bottom at which the baseline of the message label sits
     var messageLabelBaselineOffsetFromBottomOfBezel: CGFloat
@@ -112,7 +112,7 @@ public struct BezelNotificationParameters {
         self.fadeOutAnimationDuration = fadeOutAnimationDuration
         
         self.cornerRadius = cornerRadius
-        self.backgroundTint = backgroundTint
+        self.rawBackgroundTint = backgroundTint
         self.messageLabelBaselineOffsetFromBottomOfBezel = messageLabelBaselineOffsetFromBottomOfBezel
         self.messageLabelFont = messageLabelFont
         self.messageLabelColor = messageLabelColor
@@ -120,6 +120,8 @@ public struct BezelNotificationParameters {
 }
 
 
+
+// MARK: - TTL
 
 public extension BezelNotificationParameters {
     
@@ -172,6 +174,8 @@ extension BezelNotificationParameters.TimeToLive: Hashable {
 
 
 
+// MARK: - Size
+
 public extension BezelNotificationParameters {
     /// The semantic size of a bezel notification
     enum Size {
@@ -206,6 +210,8 @@ internal extension BezelNotificationParameters.Size {
 
 
 
+// MARK: - Location
+
 public extension BezelNotificationParameters {
     /// The semantic location of a bezel notification
     enum Location {
@@ -234,5 +240,22 @@ internal extension CGRect {
         return CGRect(origin: CGPoint(x: self.midX - (size.width / 2),
                                       y: self.minY + Self.lowerCenterRectBottomOffset),
                       size: size)
+    }
+}
+
+
+
+// MARK: - Background tint
+
+public extension BezelNotificationParameters {
+    var backgroundTint: NativeColor {
+        var rawBackgroundTintAlpha: CGFloat = 0
+        #if canImport(AppKit)
+        rawBackgroundTintAlpha = rawBackgroundTint.alphaComponent * 0.15
+        #else
+        rawBackgroundTint.getRed(nil, green: nil, blue: nil, alpha: &rawBackgroundTintAlpha)
+        #endif
+        
+        return rawBackgroundTint.withAlphaComponent(rawBackgroundTintAlpha * 0.15)
     }
 }

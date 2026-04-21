@@ -37,6 +37,11 @@ public extension View {
 
 
 
+public extension ToastStyle {
+    typealias Configuration = ToastConfiguration
+}
+
+
 
 internal extension ToastStyle.Configuration {
     func disappearDateIfAppearingNow() -> Date {
@@ -45,12 +50,27 @@ internal extension ToastStyle.Configuration {
     
     
     func disappearDate(appearingAt appearDate: Date) -> Date {
-        actualDuration.disappearDate(appearingAt: appearDate)
+        max(
+            actualDuration.disappearDate(appearingAt: appearDate),
+            earliestDateForCallToAction(appearingAt: appearDate)
+        )
     }
     
     
     var actualDuration: Duration {
         duration ?? .default
+    }
+    
+    
+    private func earliestDateForCallToAction(appearingAt appearDate: Date) -> Date {
+        if let callToAction {
+            let labelLength = callToAction.label.count
+            let extraReadingTime: TimeInterval = .init(labelLength) * 0.1
+            return .now + .seconds(min(30, 3 + extraReadingTime))
+        }
+        else {
+            return appearDate
+        }
     }
 }
 

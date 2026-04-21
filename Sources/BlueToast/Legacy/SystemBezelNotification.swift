@@ -13,7 +13,7 @@
     
     If you want a similar effect within your SwiftUI app, try using a toast with `.toastStyle(.bezel)` instead.
     """)
-public typealias SystemBezelToastStyle = BezelToastStyle
+public typealias SystemBezelNotification = Never
 
 #else
 
@@ -41,7 +41,7 @@ private var bezelWindows = Set<SystemBezelNotification.Window>()
     You may continue using it as you had been in previous versions, but consider using the new name instead.
     
     Direct usage of this API is no longer encouraged, but still actively supported.
-    You're encouraged to use the new SwiftUI interface, detailed in the current readme.
+    You're encouraged to use the new SwiftUI interface (`.toastStyle(.systemBezel)`), detailed in the current readme.
     Documentation of previous behavior can be found in-code as documentation for `SystemBezelNotification`, and also in the old Git repo:
     https://github.com/BlueHuskyStudios/BezelNotification/blob/50c75204c5ca60c25bc5b6ac747cd9cf06e88046/README.md
     
@@ -57,7 +57,7 @@ public typealias BHBezelNotification = SystemBezelNotification
     You may continue using it as you had been in previous versions, but consider using the new name instead.
     
     Direct usage of this API is no longer encouraged, but still actively supported.
-    You're encouraged to use the new SwiftUI interface, detailed in the current readme.
+    You're encouraged to use the new SwiftUI interface (`.toastStyle(.systemBezel)`), detailed in the current readme.
     Documentation of previous behavior can be found in-code as documentation for `SystemBezelNotification`, and also in the old Git repo:
     https://github.com/BlueHuskyStudios/BezelNotification/blob/50c75204c5ca60c25bc5b6ac747cd9cf06e88046/README.md
     
@@ -221,10 +221,7 @@ public extension SystemBezelNotification {
         private lazy var bezelContentView: ContentView = {
             let bezelContentView = ContentView(parameters: self.parameters)
             bezelContentView.wantsLayer = true
-            let inputBackgroundTint = parameters.backgroundTint
-            let backgroundTint = inputBackgroundTint.withAlphaComponent(inputBackgroundTint.alphaComponent * 0.15)
-
-            bezelContentView.layer?.backgroundColor = backgroundTint.cgColor
+            bezelContentView.layer?.backgroundColor = parameters.backgroundTint.cgColor
             return bezelContentView
         }()
         

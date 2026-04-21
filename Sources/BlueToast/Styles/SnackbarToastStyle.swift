@@ -23,7 +23,11 @@ public struct SnackbarToastStyle: ToastStyle {
                 
                 if let action = configuration.callToAction {
                     Button(action.label, action: action.userDidInteract)
+                    #if os(macOS)
                         .buttonStyle(.link)
+                    #else
+                        .buttonStyle(.borderless)
+                    #endif
                 }
             }
             .font(.body)
@@ -67,8 +71,7 @@ public extension ToastStyle where Self == SnackbarToastStyle {
 
 // MARK: - Preview
 
+@available(iOS 18, macCatalyst 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
 #Preview("Snackbar") {
-    ToastPreview {
-        SnackbarToastStyle()
-    }
+    ToastPreview(.snackbar)
 }

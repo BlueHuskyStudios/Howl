@@ -31,7 +31,8 @@ public struct CapsuleToastStyle: ToastStyle {
                         }
                         else {
                             Button(action.label, action: action.userDidInteract)
-                                .buttonStyle(.link)
+                                .buttonStyle(.borderedProminent)
+                                .buttonBorderShape(.capsule)
                                 .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
                         }
                     }
@@ -69,8 +70,7 @@ public extension ToastStyle where Self == CapsuleToastStyle {
 
 
 
+@available(iOS 18, macCatalyst 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
 #Preview {
-    ToastPreview {
-        CapsuleToastStyle()
-    }
+    ToastPreview(.capsule)
 }

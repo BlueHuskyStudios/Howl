@@ -9,90 +9,47 @@ import Combine
 import SwiftUI
 
 import CrossKitTypes
-import FunctionTools
-
-
-
-// MARK: - ToastConfiguration
-
-public struct ToastConfiguration {
-    public let text: AttributedString
-    public let duration: Duration?
-    public let icon: Image?
-    public let callToAction: CallToAction?
-    
-    
-    init(text: AttributedString, duration: Duration?, icon: Image?, callToAction: CallToAction?) {
-        self.text = text
-        self.duration = duration
-        self.icon = icon
-        self.callToAction = callToAction
-    }
-    
-    
-    init<ToastText>(text: ToastText, duration: Duration?, icon: Image?, callToAction: CallToAction?)
-    where ToastText: StringProtocol
-    {
-        self.init(text: AttributedString(text),
-                  duration: duration,
-                  icon: icon,
-                  callToAction: callToAction)
-    }
-    
-    
-    
-    public enum Duration {
-        
-        /// The toast is being shown for a brief moment to confirm that an action occurred, without remaining long enough allowing the user to read more than a couple words
-        case actionFeedback
-        
-        /// The toast is explaining something to the user, who will be reading a notable amount of text on the toast
-        case importantText
-        
-        /// The toast alerts the user of something so critical that they must be able to see the toast even if they weren't using the device at the time it was presented
-        case criticalAlert
-    }
-    
-    
-    
-    /// The call-to-action widget for a toast. This is something presented to the user, providing them with an action they can take based on the toast.
-    ///
-    /// It's not guaranteed that a user will interact with a CTA. Toasts don't have to have them, but even when they do, a toast might disappear automatically or be dismissed in some other way manually. It's best **avoid assuming** the user must perform the presented action.
-    public struct CallToAction {
-        
-        /// This is presented as the user, briefly describing what action will be taken.
-        ///
-        /// It's best to keep this to one word if possible, like "Okay", "Undo", or "Dismiss".
-        /// However, styles should still make effort to display longer labels. For example, if the toast says that a pull request was successfully created on GitLab, it would be appropriate for the CTA label to say "Show in GitLab".
-        public let label: String
-        
-        /// This is called when the user interacts with the CTA.
-        public let userDidInteract: BlindCallback
-        
-        
-        public init(label: String, userDidInteract: @escaping BlindCallback) {
-            self.label = label
-            self.userDidInteract = userDidInteract
-        }
-    }
-}
-
-
-
-extension ToastConfiguration.Duration: Hashable {}
-extension ToastConfiguration.Duration: CaseIterable {}
-
-
-
-public extension ToastStyle {
-    typealias Configuration = ToastConfiguration
-}
 
 
 
 // MARK: - API
 
 public extension View {
+    
+    /// Presents a toast when the bound `isPresented` is `true`.
+    /// 
+    /// Toasts are brief messages that appear on-screen for a moment, to tell the user that something happened, and then go away.
+    /// They're a very common paradigm in Android, and Apple system-level things sometimes use them as well, though folks have historically called these things like "bezel notifications", "popup UI", etc.. Things like the volume UI coming up when you change the volume, or Xcode's "Build Succeeded", or the Apple Pencil charging UI when you place it on the side of your iPad.
+    ///
+    /// Use ``toastStyle(_:)`` to change how the toast actually looks.
+    ///
+    /// - SeeAlso: ``toastStyle(_:)``
+    ///
+    /// - Parameters:
+    ///   - isPresented:  When the bound value is `true`, the toast is displayed; when `false`, the toast goes away. The value will automatically be set to `false` when the toast goes away.
+    ///   - configuration: The full configuration of a toast, aside from its style.
+    func toast(isPresented: Binding<Bool>, configuration: ToastConfiguration) -> some View {
+        modifier(Toast(isPresented: isPresented, configuration: configuration))
+    }
+    
+    
+    /// Presents a toast when the bound `isPresented` is `true`.
+    ///
+    /// Toasts are brief messages that appear on-screen for a moment, to tell the user that something happened, and then go away.
+    /// They're a very common paradigm in Android, and Apple system-level things sometimes use them as well, though folks have historically called these things like "bezel notifications", "popup UI", etc.. Things like the volume UI coming up when you change the volume, or Xcode's "Build Succeeded", or the Apple Pencil charging UI when you place it on the side of your iPad.
+    ///
+    /// Use ``toastStyle(_:)`` to change how the toast actually looks.
+    ///
+    /// - SeeAlso: ``toastStyle(_:)``
+    ///
+    /// - Parameters:
+    ///   - isPresented: When the bound value is `true`, the toast is displayed; when `false`, the toast goes away. The value will automatically be set to `false` when the toast goes away.
+    ///   - text:     The text to display inside the toast
+    ///   - duration: _optional_ - How long to display the toast on-screen.
+    ///                         Note that the actual amount of seconds that the toast appears might vary.
+    ///                         Defaults to a reasonable default.
+    ///   - icon:     _optional_ -  What icon the toast should display, if it supports images. Defaults to the toast style's default icon (usually nothing)
+    ///   - action:   _optional_ - A simple action the user can take when they see this toast (e.g. "Undo")
     func toast(
         isPresented: Binding<Bool>,
         text: AttributedString,
@@ -101,10 +58,27 @@ public extension View {
         action: ToastConfiguration.CallToAction? = nil)
     -> some View
     {
-        modifier(Toast(isPresented: isPresented, configuration: .init(text: text, duration: duration, icon: icon, callToAction: action)))
+        toast(isPresented: isPresented, configuration: .init(text: text, duration: duration, icon: icon, callToAction: action))
     }
     
     
+    /// Presents a toast when the bound `isPresented` is `true`.
+    ///
+    /// Toasts are brief messages that appear on-screen for a moment, to tell the user that something happened, and then go away.
+    /// They're a very common paradigm in Android, and Apple system-level things sometimes use them as well, though folks have historically called these things like "bezel notifications", "popup UI", etc.. Things like the volume UI coming up when you change the volume, or Xcode's "Build Succeeded", or the Apple Pencil charging UI when you place it on the side of your iPad.
+    ///
+    /// Use ``toastStyle(_:)`` to change how the toast actually looks.
+    ///
+    /// - SeeAlso: ``toastStyle(_:)``
+    ///
+    /// - Parameters:
+    ///   - isPresented: When the bound value is `true`, the toast is displayed; when `false`, the toast goes away. The value will automatically be set to `false` when the toast goes away.
+    ///   - text:     The text to display inside the toast
+    ///   - duration: _optional_ - How long to display the toast on-screen.
+    ///                         Note that the actual amount of seconds that the toast appears might vary.
+    ///                         Defaults to a reasonable default.
+    ///   - icon:     _optional_ -  What icon the toast should display, if it supports images. Defaults to the toast style's default icon (usually nothing)
+    ///   - action:   _optional_ - A simple action the user can take when they see this toast (e.g. "Undo")
     func toast<ToastText>(
         isPresented: Binding<Bool>,
         text: ToastText,
@@ -140,7 +114,7 @@ private struct Toast: ViewModifier {
     @Binding
     var isPresented: Bool
     
-    let configuration: ToastStyle.Configuration
+    let configuration: ToastConfiguration
     
     
     #if DEBUG
@@ -164,7 +138,8 @@ private struct Toast: ViewModifier {
                     
                     if isPresented {
                         AnyView(toastStyle.body(configuration))
-                            .transition(.move(edge: .bottom).animation(.bouncy))
+                            .transition(.blurReplace.animation(.bouncy))
+                            .animation(.bouncy, value: configuration)
                     }
                     
                     Rectangle()

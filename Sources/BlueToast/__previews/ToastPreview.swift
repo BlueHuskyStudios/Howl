@@ -9,50 +9,71 @@ import SwiftUI
 
 
 
-@available(iOS 16, *)
+@available(iOS 18, *)
 internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
     
     @State
     private var show = true
     
-    let demoToast: () -> ToastStyleKind
+    @State
+    private var useIcon = true
+    
+    @State
+    private var useCta = true
+    
+    let demoToast: ToastStyleKind
+    
+    
+    init(_ demoToast: ToastStyleKind) {
+        self.demoToast = demoToast
+    }
+    
     
     var body: some View {
-        ZStack {
-            VStack {
-                ForEach(Bundle.allBundles, id: \.hashValue) { bundle in
-                    Text("\(URL(filePath: ".", relativeTo: bundle.resourceURL).resolvingSymlinksInPath().absoluteString)")
-                        .truncationMode(.head)
-                }
-            }
-//            Toggle("Show", isOn: $show)
+        TabView {
+            Tab("Demo", systemImage: "sparkles") {
+                ZStack {
+//            VStack {
+//                ForEach(Bundle.allBundles, id: \.hashValue) { bundle in
+//                    Text("\(URL(filePath: ".", relativeTo: bundle.resourceURL).resolvingSymlinksInPath().absoluteString)")
+//                        .truncationMode(.head)
+//                }
+//            }
             
 //            Image(decorative: "Background")
-//            Image(nsImage: NSImage(cgImage: cgBackgroundImage, size: NSSize(scaling: CGSize(width: 1440, height: 1080), toFitWithin: CGSize(width: 640, height: 480), approach: .scaleProportionallyDown)))
-//                .resizable()
-//                .aspectRatio(contentMode: .fill)
-//                .frame(width: 640, height: 480)
-//                .overlay {
-//                    if show {
-//                        demoToast()
-//                            .body(.init(text: "Test toast",
-//                                        duration: .criticalAlert,
-//                                        icon: nil,
-//                                        callToAction: .init(label: "Action!", userDidInteract: null)))
-////                            .animation(.bouncy, value: show)
-//                    }
-//                }
+                    MeshGradient.toastPreview
+                        .ignoresSafeArea()
+                    
+                    VStack(spacing: 24) {
+                        Toggle("Show", isOn: $show)
+                        Toggle("Use icon", isOn: $useIcon)
+                        Toggle("Use CTA", isOn: $useCta)
+                    }
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.systemBackground))
+                    }
+                    .padding()
+                }
+                .toast(
+                    isPresented: $show,
+                    text: "Demo toast",
+                    duration: .criticalAlert,
+                    icon: useIcon ? Image(systemName: "hammer.fill").resizable() : nil,
+                )
+                .toastStyle(demoToast)
+            }
+            
+            Tab("Foo", systemImage: "square", content: { EmptyView() })
+            Tab("Bar", systemImage: "circle", content: { EmptyView() })
         }
     }
 }
 
 
 
-// MARK: - Background image data
-
-#if DEBUG
-@available(iOS 16, *)
-private let cgBackgroundImage: CGImage = CGImage(jpegDataProviderSource: .init(url: URL(filePath: "../") as CFURL)!, decode: nil, shouldInterpolate: false, intent: .perceptual)!
-#else
-private let cgBackgroundImage: CGImage = CGImage(width: 0, height: 0, bitsPerComponent: 0, bitsPerPixel: 0, bytesPerRow: 0, space: .init(name: CGColorSpace.genericRGBLinear)!, bitmapInfo: [], provider: .init(data: Data() as CFData)!, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
-#endif
+@available(iOS 18, *)
+#Preview("Capsule") {
+    ToastPreview(.capsule)
+}

@@ -39,6 +39,9 @@ public struct SystemBezelToastStyle: ToastStyle {
                     .sink { _ in }
                     .store(in: &SystemBezelToastStyle.notificationLifecyclePublishers)
             }
+            .onDisappear {
+                SystemBezelToastStyle.notificationLifecyclePublishers = []
+            }
     }
     
     
@@ -62,18 +65,6 @@ public struct SystemBezelToastStyle: ToastStyle {
 
 
 
-private extension SystemBezelNotification.TimeToLive {
-    init(_ duration: ToastStyle.Configuration.Duration) {
-        self = switch duration {
-        case .actionFeedback: .short
-        case .importantText: .long
-        case .criticalAlert: .forever
-        }
-    }
-}
-
-
-
 public extension ToastStyle where Self == SystemBezelToastStyle {
     
     static var systemBezel: Self { Self.init() }
@@ -83,8 +74,8 @@ public extension ToastStyle where Self == SystemBezelToastStyle {
     
     
     static func systemBezel(
-        location: SystemBezelNotification.Location = SystemBezelNotification.Parameters.defaultLocation,
-        size: SystemBezelNotification.Size = SystemBezelNotification.Parameters.defaultSize,
+        location: SystemBezelNotification.Parameters.Location = SystemBezelNotification.Parameters.defaultLocation,
+        size: SystemBezelNotification.Parameters.Size = SystemBezelNotification.Parameters.defaultSize,
         
         fadeInAnimationDuration: TimeInterval = SystemBezelNotification.Parameters.defaultFadeInAnimationDuration,
         fadeOutAnimationDuration: TimeInterval = SystemBezelNotification.Parameters.defaultFadeOutAnimationDuration,
@@ -110,9 +101,8 @@ public extension ToastStyle where Self == SystemBezelToastStyle {
 
 
 
+@available(macOS 15, *)
 #Preview("System bezel") {
-    ToastPreview {
-        SystemBezelToastStyle()
-    }
+    ToastPreview(.systemBezel)
 }
 #endif

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+import CrossKitTypes
 import FunctionTools
 
 
@@ -125,12 +126,16 @@ public extension ToastConfiguration {
 
 extension ToastConfiguration.CallToAction: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.label == rhs.label
-        && (
-            withUnsafePointer(to: lhs.userDidInteract, echo)
-            ==
-            withUnsafePointer(to: rhs.userDidInteract, echo)
-        )
+        lhs.hashValue == rhs.hashValue
+    }
+}
+
+
+
+extension ToastConfiguration.CallToAction: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(label)
+        hasher.combine(withUnsafePointer(to: userDidInteract, echo))
     }
 }
 
@@ -138,4 +143,19 @@ extension ToastConfiguration.CallToAction: Equatable {
 
 // MARK: - Conformance
 
-extension ToastConfiguration: Equatable {}
+extension ToastConfiguration: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+        hasher.combine(icon?.nativeImage())
+        hasher.combine(duration)
+        hasher.combine(callToAction)
+    }
+}
+
+
+
+extension ToastConfiguration: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+}

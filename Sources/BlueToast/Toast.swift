@@ -102,6 +102,10 @@ public extension View {
 
 private struct Toast: ViewModifier {
     
+    
+    @Environment(\.self)
+    private var environment
+    
     @Environment(\.toastStyle)
     private var toastStyle
     
@@ -137,15 +141,16 @@ private struct Toast: ViewModifier {
                     #endif
                     
                     if isPresented {
-                        AnyView(toastStyle.body(configuration))
-                            .transition(.blurReplace.animation(.bouncy))
-                            .animation(.bouncy, value: configuration)
+//                        Text(String(describing: colorScheme) + " mode")
+//                            .offset(x: 0, y: 200)
+                        AnyView(toastStyle.body(configuration, environment: environment))
+                            .transition(.blurReplace(.upUp).animation(.bouncy))
                     }
                     
                     Rectangle()
                         .fill(.clear)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .allowsHitTesting(true)
+                        .allowsHitTesting(false)
                     
                     
                         .onChange(of: isPresented) { _, isPresented in
@@ -166,6 +171,7 @@ private struct Toast: ViewModifier {
                             }
                         }
                 }
+//                .animation(.bouncy, value: configuration)
                 .animation(.bouncy, value: isPresented)
             }
     }

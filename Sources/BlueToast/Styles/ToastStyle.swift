@@ -13,9 +13,11 @@ import SwiftUI
 public protocol ToastStyle {
     
     /// Generates the toast's visual style
-    ///
-    /// - Parameter configuration: All the information that the toast can contain
-    func body(_ configuration: Configuration) -> Body
+    /// 
+    /// - Parameters:
+    ///   - configuration: All the information that the toast can contain
+    ///   - environment:   The values of the SwiftUI environment that this toast will be rendered in
+    func body(_ configuration: Configuration, environment: EnvironmentValues) -> Body
     
     
     

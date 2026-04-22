@@ -85,7 +85,7 @@ private extension NativeView {
 
 #if canImport(AppKit)
 typealias NativeView = NSView
-typealias NativeHostingView<V: View> = NSHostingView<V>
+typealias NativeSwiftUiHost<V: View> = NSHostingView<V>
 typealias LegacyEdgeInsets = NSEdgeInsets
 #elseif canImport(UIKit)
 typealias NativeView = UIView

@@ -19,10 +19,14 @@ public struct BezelToastStyle: ToastStyle {
     
     private let shape = RoundedRectangle(cornerRadius: cornerRadius)
     
-    public func body(_ configuration: Configuration) -> some View {
+    
+    public func body(_ configuration: Configuration, environment: EnvironmentValues) -> some View {
         ZStack(alignment: .bottom) {
             Color.clear
-            bezel(config: configuration, parameters: parameters(from: configuration))
+            positionedBezel(
+                config: configuration,
+                parameters: parameters(from: configuration),
+                environment: environment)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -42,18 +46,14 @@ private extension BezelToastStyle {
     }
     
     
-    func bezel(config: Configuration, parameters: BezelNotificationParameters) -> some View {
-        bezelBuilder(config: config, parameters: parameters) {
-            let renderedMessage = Text(parameters.messageText)
-                .font(.init(parameters.messageLabelFont))
-                .multilineTextAlignment(.center)
-                .contentTransition(.interpolate)
-                .padding(.horizontal)
-                .id("\(Self.self).message")
-            
-            
-            if let icon = config.icon {
-                VStack {
+    func positionedBezel(
+        config: Configuration,
+        parameters: BezelNotificationParameters,
+        environment: EnvironmentValues)
+    -> some View {
+        bezel(config: config, parameters: parameters, environment: environment) {
+            VStack {
+                if let icon = config.icon {
                     let bezelSize = parameters.size.cgSize
                     let imageSize = CGSize(square: 999)
                         .scaled(within: bezelSize * 0.6,
@@ -67,24 +67,56 @@ private extension BezelToastStyle {
                             .frame(maxWidth: imageSize.width, maxHeight: imageSize.height)
                         Spacer()
                     }
-                    .id("sdiufnds")
-                    .tag("9ijtofkmd")
-                    .transition(.blurReplace.animation(.bouncy))
+                    .transition(.blurReplace)
                     
-                    renderedMessage
                 }
-                .padding(.bottom)
-            }
-            else {
-                renderedMessage
+                
+                renderedMessage(config: config, parameters: parameters)
+                    .padding(.bottom, nil == config.icon ? 0 : nil)
             }
         }
     }
     
     
     @ViewBuilder
-    private func bezelBuilder<Content: View>(config: Configuration, parameters: BezelNotificationParameters, @ViewBuilder content: () -> Content) -> some View {
-        let bezel = Rectangle()
+    private func renderedMessage(config: Configuration, parameters: BezelNotificationParameters) -> some View {
+        Text(config.text)
+//            .font(.init(parameters.messageLabelFont)) <- was not friendly with accessibility sizes
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil == config.icon ? nil : 1)
+            .frame(maxHeight: nil == config.icon ? .infinity : nil)
+            .contentTransition(.interpolate)
+            .padding(.horizontal)
+            .id("Message")
+    }
+    
+    
+    @ViewBuilder
+    private func bezel<Content: View>(
+        config: Configuration,
+        parameters: BezelNotificationParameters,
+        environment: EnvironmentValues,
+        @ViewBuilder content: () -> Content)
+    -> some View {
+        
+        if #available(macOS 15, iOS 18, *) {
+            _bezel(config: config, parameters: parameters, environment: environment, content: content)
+                .materialActiveAppearance(.active)
+        }
+        else {
+            _bezel(config: config, parameters: parameters, environment: environment, content: content)
+        }
+    }
+    
+    
+    private func _bezel<Content: View>(
+        config: Configuration,
+        parameters: BezelNotificationParameters,
+        environment: EnvironmentValues,
+        content: () -> Content)
+    -> some View {
+        Rectangle()
             .fill(.thinMaterial)
             .frame(width: parameters.size.cgSize.width,
                    height: parameters.size.cgSize.height)
@@ -92,19 +124,21 @@ private extension BezelToastStyle {
                 ZStack {
                     Color(parameters.backgroundTint)
                     content()
+                        .foregroundStyle(.secondary)
                         .animation(.bouncy, value: config)
                 }
                 .compositingGroup()
-                .blendMode(.plusLighter)
+                .blendMode(bestForegroundBlendMode(in: environment.colorScheme))
             }
             .clipShape(RoundedRectangle(cornerRadius: BezelNotificationParameters.defaultCornerRadius))
-        
-        if #available(macOS 15, iOS 18, *) {
-            bezel
-                .materialActiveAppearance(.active)
-        }
-        else {
-            bezel
+    }
+    
+    
+    private func bestForegroundBlendMode(in colorScheme: ColorScheme) -> BlendMode {
+        switch colorScheme {
+        case .dark: .plusLighter
+        case .light: .plusDarker
+        @unknown default: .normal
         }
     }
 }
@@ -119,7 +153,7 @@ public extension ToastStyle where Self == BezelToastStyle {
 
 // MARK: - Preview
 
-@available(iOS 18, macCatalyst 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
+@available(macOS 15, iOS 18, macCatalyst 18, tvOS 18, visionOS 2, watchOS 11, *)
 #Preview("Bezel") {
     ToastPreview(.bezel)
 }

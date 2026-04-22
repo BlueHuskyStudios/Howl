@@ -7,10 +7,16 @@
 
 import SwiftUI
 
+import CrossKitTypes
+import FunctionTools
 
 
-@available(iOS 18, *)
+
+@available(macOS 15, iOS 18, *)
 internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
+    
+    @State
+    private var text: String = "Demo toast"
     
     @State
     private var show = true
@@ -30,21 +36,15 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
     
     
     var body: some View {
-        TabView {
-            Tab("Demo", systemImage: "sparkles") {
+//        TabView {
+//            Tab("Demo", systemImage: "sparkles") {
                 ZStack {
-//            VStack {
-//                ForEach(Bundle.allBundles, id: \.hashValue) { bundle in
-//                    Text("\(URL(filePath: ".", relativeTo: bundle.resourceURL).resolvingSymlinksInPath().absoluteString)")
-//                        .truncationMode(.head)
-//                }
-//            }
-            
-//            Image(decorative: "Background")
+//                    Image.previewBackground
                     MeshGradient.toastPreview
                         .ignoresSafeArea()
                     
                     VStack(spacing: 24) {
+                        TextField("Text", text: $text)
                         Toggle("Show", isOn: $show)
                         Toggle("Use icon", isOn: $useIcon)
                         Toggle("Use CTA", isOn: $useCta)
@@ -52,28 +52,36 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
                     .padding()
                     .background {
                         RoundedRectangle(cornerRadius: 8)
+                        #if canImport(AppKit)
+                            .fill(Color(.controlBackgroundColor))
+                        #else
                             .fill(Color(.systemBackground))
+                        #endif
                     }
                     .padding()
+                    .padding(.bottom, 100)
                 }
+                
                 .toast(
                     isPresented: $show,
-                    text: "Demo toast",
+                    text: text,
                     duration: .criticalAlert,
                     icon: useIcon ? Image(systemName: "hammer.fill").resizable() : nil,
+                    action: useCta ? .init(label: "Undo", userDidInteract: null) : nil,
                 )
                 .toastStyle(demoToast)
-            }
-            
-            Tab("Foo", systemImage: "square", content: { EmptyView() })
-            Tab("Bar", systemImage: "circle", content: { EmptyView() })
-        }
+//            }
+//            
+//            Tab("Foo", systemImage: "square", content: { EmptyView() })
+//            Tab("Bar", systemImage: "circle", content: { EmptyView() })
+//        }
+        .frame(minHeight: 500)
     }
 }
 
 
 
-@available(iOS 18, *)
+@available(macOS 15, iOS 18, *)
 #Preview("Capsule") {
     ToastPreview(.capsule)
 }

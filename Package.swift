@@ -8,7 +8,7 @@ let package = Package(
     
     platforms: [
         .macOS("14"),
-        .iOS("17"), // 15: AttributedString; 17: .geometryGroup(): 
+        .iOS("17"), 
     ],
     
     products: [

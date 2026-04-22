@@ -90,10 +90,10 @@ public extension SystemBezelNotification {
     static func show(messageText: String,
                      icon: NativeImage? = nil,
                      
-                     location: Location = Parameters.defaultLocation,
-                     size: Size = Parameters.defaultSize,
+                     location: Parameters.Location = Parameters.defaultLocation,
+                     size: Parameters.Size = Parameters.defaultSize,
                      
-                     timeToLive: TimeToLive = Parameters.defaultTimeToLive,
+                     timeToLive: Parameters.TimeToLive = Parameters.defaultTimeToLive,
                      fadeInAnimationDuration: TimeInterval = Parameters.defaultFadeInAnimationDuration,
                      fadeOutAnimationDuration: TimeInterval = Parameters.defaultFadeOutAnimationDuration,
                      
@@ -237,8 +237,9 @@ public extension SystemBezelNotification {
             
             self.parameters = parameters
             let screen = parameters.location.screen
+            let bezelSize = parameters.size.cgSize
             let contentRect = parameters.location.bezelWindowContentRect(
-                in: screen ?? CGRect(origin: CGPoint(x: 48, y: 48), size: size.cgSize),
+                in: screen?.frame ?? CGRect(origin: CGPoint(bezelSize * 4), size: bezelSize),
                 atSize: parameters.size)
             
             super.init(contentRect: contentRect,

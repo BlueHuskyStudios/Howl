@@ -13,7 +13,7 @@
     
     If you want a similar effect within your SwiftUI app, try using a toast with `.toastStyle(.bezel)` instead.
     """)
-public typealias SystemBezelToastStyle = BezelToastStyle
+public typealias SystemBezelNotification = Never
 
 #else
 
@@ -41,7 +41,7 @@ private var bezelWindows = Set<SystemBezelNotification.Window>()
     You may continue using it as you had been in previous versions, but consider using the new name instead.
     
     Direct usage of this API is no longer encouraged, but still actively supported.
-    You're encouraged to use the new SwiftUI interface, detailed in the current readme.
+    You're encouraged to use the new SwiftUI interface (`.toastStyle(.systemBezel)`), detailed in the current readme.
     Documentation of previous behavior can be found in-code as documentation for `SystemBezelNotification`, and also in the old Git repo:
     https://github.com/BlueHuskyStudios/BezelNotification/blob/50c75204c5ca60c25bc5b6ac747cd9cf06e88046/README.md
     
@@ -57,7 +57,7 @@ public typealias BHBezelNotification = SystemBezelNotification
     You may continue using it as you had been in previous versions, but consider using the new name instead.
     
     Direct usage of this API is no longer encouraged, but still actively supported.
-    You're encouraged to use the new SwiftUI interface, detailed in the current readme.
+    You're encouraged to use the new SwiftUI interface (`.toastStyle(.systemBezel)`), detailed in the current readme.
     Documentation of previous behavior can be found in-code as documentation for `SystemBezelNotification`, and also in the old Git repo:
     https://github.com/BlueHuskyStudios/BezelNotification/blob/50c75204c5ca60c25bc5b6ac747cd9cf06e88046/README.md
     
@@ -90,10 +90,10 @@ public extension SystemBezelNotification {
     static func show(messageText: String,
                      icon: NativeImage? = nil,
                      
-                     location: Location = Parameters.defaultLocation,
-                     size: Size = Parameters.defaultSize,
+                     location: Parameters.Location = Parameters.defaultLocation,
+                     size: Parameters.Size = Parameters.defaultSize,
                      
-                     timeToLive: TimeToLive = Parameters.defaultTimeToLive,
+                     timeToLive: Parameters.TimeToLive = Parameters.defaultTimeToLive,
                      fadeInAnimationDuration: TimeInterval = Parameters.defaultFadeInAnimationDuration,
                      fadeOutAnimationDuration: TimeInterval = Parameters.defaultFadeOutAnimationDuration,
                      
@@ -212,136 +212,7 @@ public extension SystemBezelNotification {
 
 
 
-/// A set of parameters used to configure and present a bezel notification
 public extension SystemBezelNotification {
-    struct Parameters {
-        
-        public static let defaultLocation: Location = .normal
-        public static let defaultSize: Size = .normal
-        public static let defaultTimeToLive: TimeToLive = .short
-        
-        public static let defaultFadeInAnimationDuration: TimeInterval = 0
-        public static let defaultFadeOutAnimationDuration: TimeInterval = 0.25
-        
-        public static let defaultCornerRadius: CGFloat = 18
-        public static let defaultBackgroundTint = NSColor.clear
-        public static let defaultMessageLabelBaselineOffsetFromBottomOfBezel: CGFloat = 20
-        public static let defaultMessageLabelFontSize: CGFloat = 18
-        public static let defaultMessageLabelFont = NSFont.systemFont(ofSize: defaultMessageLabelFontSize)
-        public static let defaultMessageLabelColor = NSColor.labelColor
-        
-        
-        // MARK: Basics
-        
-        /// The text to show in the bezel notification's message area
-        var messageText: String
-        
-        /// The icon to show in the bezel notification's icon area
-        var icon: NSImage?
-        
-        
-        // MARK: Presentation
-        
-        /// The location on the screen at which to display the bezel notification
-        var location: Location
-        
-        /// The size of the bezel notification
-        var size: Size
-        
-        /// The number of seconds to display the bezel notification on the screen
-        var timeToLive: TimeToLive
-        
-        
-        // MARK: Animations
-        
-        /// The number of seconds that it takes to fade in the bezel notification
-        var fadeInAnimationDuration: TimeInterval
-        
-        /// The number of seconds that it takes to fade out the bezel notification
-        var fadeOutAnimationDuration: TimeInterval
-        
-        
-        // MARK: Drawing
-        
-        /// The radius of the bezel notification's corners, in points
-        var cornerRadius: CGFloat
-        
-        /// The tint of the bezel notification's background
-        var backgroundTint: NSColor
-        
-        /// The distance from the bottom of the bezel notification's bottom at which the baseline of the message label sits
-        var messageLabelBaselineOffsetFromBottomOfBezel: CGFloat
-        
-        /// The font used for the message label
-        var messageLabelFont: NSFont
-        
-        /// The text color of the message label
-        var messageLabelColor: NSColor
-        
-        
-        public init(messageText: String,
-                    icon: NSImage? = nil,
-                    
-                    location: Location = defaultLocation,
-                    size: Size = defaultSize,
-                    timeToLive: TimeToLive = defaultTimeToLive,
-                    
-                    fadeInAnimationDuration: TimeInterval = defaultFadeInAnimationDuration,
-                    fadeOutAnimationDuration: TimeInterval = defaultFadeOutAnimationDuration,
-                    
-                    cornerRadius: CGFloat = defaultCornerRadius,
-                    backgroundTint: NSColor = defaultBackgroundTint,
-                    messageLabelBaselineOffsetFromBottomOfBezel: CGFloat = defaultMessageLabelBaselineOffsetFromBottomOfBezel,
-                    messageLabelFont: NSFont = defaultMessageLabelFont,
-                    messageLabelColor: NSColor = defaultMessageLabelColor
-        ) {
-            self.messageText = messageText
-            self.icon = icon
-            
-            self.location = location
-            self.size = size
-            self.timeToLive = timeToLive
-            
-            self.fadeInAnimationDuration = fadeInAnimationDuration
-            self.fadeOutAnimationDuration = fadeOutAnimationDuration
-            
-            self.cornerRadius = cornerRadius
-            self.backgroundTint = backgroundTint.withAlphaComponent(backgroundTint.alphaComponent * 0.15)
-            self.messageLabelBaselineOffsetFromBottomOfBezel = messageLabelBaselineOffsetFromBottomOfBezel
-            self.messageLabelFont = messageLabelFont
-            self.messageLabelColor = messageLabelColor
-        }
-    }
-    
-    
-    
-    /// How long a bezel notification should stay on screen
-    enum TimeToLive {
-        
-        /// Bezel is shown for just a couple seconds
-        case short
-        
-        /// Bezel if shown for several seconds
-        case long
-        
-        /// Bezel is never hidden
-        case forever
-        
-        /// Bezel is shown for an exact number of seconds
-        case exactly(seconds: TimeInterval)
-        
-        
-        var inSeconds : TimeInterval {
-            switch self {
-            case .short: return 2
-            case .long: return 6
-            case .forever: return .infinity
-            case .exactly(let seconds): return seconds
-            }
-        }
-    }
-    
-    
     
     /// The window used to present a bezel notification.
     /// If you _really_ need minute control, you may use this.
@@ -365,8 +236,11 @@ public extension SystemBezelNotification {
         public init(parameters: Parameters) {
             
             self.parameters = parameters
-            
-            let contentRect = parameters.location.bezelWindowContentRect(atSize: parameters.size)
+            let screen = parameters.location.screen
+            let bezelSize = parameters.size.cgSize
+            let contentRect = parameters.location.bezelWindowContentRect(
+                in: screen?.frame ?? CGRect(origin: CGPoint(bezelSize * 4), size: bezelSize),
+                atSize: parameters.size)
             
             super.init(contentRect: contentRect,
                        styleMask: bezelStyleMask,
@@ -488,23 +362,16 @@ public extension SystemBezelNotification {
 }
 
 
-extension SystemBezelNotification.TimeToLive: Hashable {
-    public func hash(into hasher: inout Hasher) {
+
+internal extension BezelNotificationParameters.Location {
+    var screen: NSScreen? {
         switch self {
-        case .short:
-            hasher.combine("\(Self.self).__PREDEFINED__.short")
-            
-        case .long:
-            hasher.combine("\(Self.self).__PREDEFINED__.long")
-            
-        case .forever:
-            hasher.combine("\(Self.self).__PREDEFINED__.forever")
-            
-        case .exactly(let seconds):
-            hasher.combine("\(Self.self).exactly(seconds: \(seconds))")
+        case .normal:
+            return .main ?? NSScreen.screens.first
         }
     }
 }
+
 
 
 private extension String {
@@ -529,76 +396,7 @@ private extension String {
 
 
 public extension SystemBezelNotification {
-    /// The semantic size of a bezel notification
-    enum Size {
-        case normal
-    }
+    /// A set of parameters used to configure and present a bezel notification
+    typealias Parameters = BezelNotificationParameters
 }
-
-
-
-internal extension SystemBezelNotification.Size {
-    
-    private var width: CGFloat {
-        switch self {
-        case .normal:
-            return 200
-        }
-    }
-    
-    
-    private var height: CGFloat {
-        switch self {
-        case .normal:
-            return 200
-        }
-    }
-    
-    
-    var cgSize: CGSize {
-        CGSize(width: width, height: height)
-    }
-}
-
-
-
-public extension SystemBezelNotification {
-    /// The semantic location of a bezel notification
-    enum Location {
-        case normal
-    }
-}
-
-
-
-internal extension SystemBezelNotification.Location {
-    func bezelWindowContentRect(atSize size: SystemBezelNotification.Size) -> NSRect {
-        switch self {
-        case .normal:
-            return screen?.lowerCenterRect(ofSize: size.cgSize) ?? NSRect(origin: NSPoint(x: 48, y: 48), size: size.cgSize)
-        }
-    }
-    
-    
-    var screen: NSScreen? {
-        switch self {
-        case .normal:
-            return .main ?? NSScreen.screens.first
-        }
-    }
-}
-
-
-
-private extension NSScreen {
-    
-    private static let lowerCenterRectBottomOffset: CGFloat = 140
-    
-    func lowerCenterRect(ofSize size: NSSize) -> NSRect {
-        return NSRect(origin: NSPoint(x: self.frame.midX - (size.width / 2),
-                                      y: self.frame.minY + NSScreen.lowerCenterRectBottomOffset),
-                      size: size)
-    }
-}
-
 #endif

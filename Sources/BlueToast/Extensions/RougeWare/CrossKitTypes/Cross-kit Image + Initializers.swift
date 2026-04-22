@@ -38,10 +38,11 @@ public extension Image {
         let view = NoInsetHostingView(rootView: self)
         #if canImport(AppKit)
             view.setFrameSize(view.fittingSize)
+            return view.bitmapImage()
         #elseif canImport(UIKit)
             view.view.frame.size = view.preferredContentSize
+            return view.view.bitmapImage()
         #endif
-        return view.bitmapImage()
     }
 }
 
@@ -49,9 +50,12 @@ public extension Image {
 
 // MARK: - Private utilities
 
-private class NoInsetHostingView<V: View>: NativeHostingView<V> {
+private class NoInsetHostingView<V: View>: NativeSwiftUiHost<V> {
+    #if canImport(AppKit)
     @inline(__always)
-    override var safeAreaInsets: OldEdgeInsets { .init() }
+    override var safeAreaInsets: LegacyEdgeInsets { .init() }
+    #elseif canImport(UIKit)
+    #endif
 }
 
 
@@ -59,6 +63,7 @@ private class NoInsetHostingView<V: View>: NativeHostingView<V> {
 private extension NativeView {
     
     func bitmapImage() -> NativeImage? {
+        #if canImport(AppKit)
         guard let rep = bitmapImageRepForCachingDisplay(in: bounds) else {
             return nil
         }
@@ -67,6 +72,12 @@ private extension NativeView {
             return nil
         }
         return NSImage(cgImage: cgImage, size: bounds.size)
+        #elseif canImport(UIKit)
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { context in
+            layer.render(in: context.cgContext)
+        }
+        #endif
     }
 }
 
@@ -74,10 +85,10 @@ private extension NativeView {
 
 #if canImport(AppKit)
 typealias NativeView = NSView
-typealias NativeHostingView<V: View> = NSHostingView<V>
-typealias OldEdgeInsets = NSEdgeInsets
+typealias NativeSwiftUiHost<V: View> = NSHostingView<V>
+typealias LegacyEdgeInsets = NSEdgeInsets
 #elseif canImport(UIKit)
 typealias NativeView = UIView
-typealias NativeHostingView<V: View> = UIHostingController<V>
-typealias OldEdgeInsets = UIEdgeInsets
+typealias NativeSwiftUiHost<V: View> = UIHostingController<V>
+typealias LegacyEdgeInsets = UIEdgeInsets
 #endif

@@ -249,13 +249,20 @@ internal extension CGRect {
 
 public extension BezelNotificationParameters {
     var backgroundTint: NativeColor {
-        var rawBackgroundTintAlpha: CGFloat = 0
-        #if canImport(AppKit)
-        rawBackgroundTintAlpha = rawBackgroundTint.alphaComponent * 0.15
-        #else
-        rawBackgroundTint.getRed(nil, green: nil, blue: nil, alpha: &rawBackgroundTintAlpha)
-        #endif
+        get {
+            var rawBackgroundTintAlpha: CGFloat = 0
+            #if canImport(AppKit)
+                rawBackgroundTintAlpha = rawBackgroundTint.alphaComponent * 0.15
+            #else
+                rawBackgroundTint.getRed(nil, green: nil, blue: nil, alpha: &rawBackgroundTintAlpha)
+            #endif
+            
+            return rawBackgroundTint.withAlphaComponent(rawBackgroundTintAlpha * 0.15)
+        }
         
-        return rawBackgroundTint.withAlphaComponent(rawBackgroundTintAlpha * 0.15)
+        @available(*, deprecated, renamed: "rawBackgroundTint", message: "`backgroundTint` is the processed color to use as the bezel notification's background tint. Use `rawBackgroundTint` to set the raw color value, and get its processed version from `backgroundTint`.")
+        set {
+            rawBackgroundTint = newValue
+        }
     }
 }

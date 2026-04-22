@@ -11,6 +11,8 @@ import CrossKitTypes
 
 #if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 
@@ -252,7 +254,7 @@ public extension BezelNotificationParameters {
         get {
             var rawBackgroundTintAlpha: CGFloat = 0
             #if canImport(AppKit)
-                rawBackgroundTintAlpha = rawBackgroundTint.alphaComponent * 0.15
+                rawBackgroundTintAlpha = rawBackgroundTint.alphaComponent
             #else
                 rawBackgroundTint.getRed(nil, green: nil, blue: nil, alpha: &rawBackgroundTintAlpha)
             #endif

@@ -55,12 +55,12 @@ public extension ToastConfiguration.Duration {
         case .exactly(seconds: let ttlSeconds):
             let closestDuration = Self
                 .allCases
-                .map { ($0, seconds: $0.inSeconds) }
+                .map { (duration: $0, seconds: $0.inSeconds) }
                 .min {
                     abs($0.seconds - ttlSeconds) < abs($1.seconds - ttlSeconds)
                 }
             
-            self = closestDuration?.0 ?? .importantText
+            self = closestDuration?.duration ?? .importantText
         }
     }
 }

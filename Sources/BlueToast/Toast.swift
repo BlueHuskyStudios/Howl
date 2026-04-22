@@ -162,7 +162,7 @@ private struct Toast: ViewModifier {
                                 disappearDate = configuration.disappearDateIfAppearingNow()
                                 
                                 timerStorage = Task {
-                                    try? await Task.sleep(for: .seconds(configuration.actualDuration.inSeconds))
+                                    try? await Task.sleep(until: disappearDate.instant)
                                     wrapUpDippear()
                                 }
                             }

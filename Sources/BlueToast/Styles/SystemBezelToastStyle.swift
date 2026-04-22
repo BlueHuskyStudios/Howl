@@ -31,7 +31,7 @@ public struct SystemBezelToastStyle: ToastStyle {
     
     
     
-    public func body(_ configuration: Configuration) -> some View {
+    public func body(_ configuration: Configuration, environment _: EnvironmentValues) -> some View {
         Rectangle()
             .fill(.clear)
             .onAppear {

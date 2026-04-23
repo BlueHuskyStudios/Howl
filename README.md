@@ -10,7 +10,7 @@
 
 Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps in Apple platforms.
 
-![Howl examples](./docs/images/examples.png)
+![TODO: Hero Howl examples](./examples/hero.png)
 
 
 
@@ -23,7 +23,7 @@ They're a very common paradigm in Android, and Apple system-level things sometim
 
 Here's some examples from outside this library:
 
-![Examples of other toast messages](./docs/images/otherToastExamples.png)
+![TODO: Examples of other toast messages](./docs/images/otherToastExamples.png)
 
 
 ## Usage
@@ -92,13 +92,22 @@ myView
     .toastStyle(.bezel)
 ```
 
-![Screenshots of the bezel toast](./examples/toast-bezel.png)
+![TODO: Screenshots of the bezel toast](./examples/toast-bezel.png)
 
 
 
 ### Snackbar
 
 ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+
+This is similar to the kind of bottom-left notifications you'd see in many websites and Android apps.
+
+```swift
+myView
+    .toastStyle(.snackbar)
+```
+
+![TODO: Screenshots of the bezel toast](./examples/toast-snackbar.png)
 
 
 
@@ -107,6 +116,15 @@ myView
 ### Capsule
 
 ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+
+This is similar to the kind of bottom-center notifications you'd see in various Android apps and low-priority system alerts.
+
+```swift
+myView
+    .toastStyle(.capsule)
+```
+
+![TODO: Screenshots of the bezel toast](./examples/toast-capsule.png)
 
 
 
@@ -137,6 +155,10 @@ extension ToastStyle where Self == MyToastStyle {
 ``` 
 
 All these parameters (aside from the callback) can be encapsulated in a `BezelParameters` object. This is useful for keeping pre-defned bezels, serializing them for user-customization, etc.
+
+> ℹ️ Be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view in its `body` (which _will_ be rendered within SwiftUI), and that body function will be passed the current environment values in case it needs them.
+> If you need to use things like `@State` or `@EnvironmentObject` fields, you can use a custom SwiftUI view somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.
+
 
 
 

@@ -35,9 +35,11 @@ public struct SystemBezelToastStyle: ToastStyle {
         Rectangle()
             .fill(.clear)
             .onAppear {
-                SystemBezelNotification.show(with: parameters(with: configuration))
-                    .sink { _ in }
-                    .store(in: &SystemBezelToastStyle.notificationLifecyclePublishers)
+                Task { @MainActor in
+                    SystemBezelNotification.show(with: parameters(with: configuration))
+                        .sink { _ in }
+                        .store(in: &SystemBezelToastStyle.notificationLifecyclePublishers)
+                }
             }
             .onDisappear {
                 SystemBezelToastStyle.notificationLifecyclePublishers = []
@@ -45,6 +47,7 @@ public struct SystemBezelToastStyle: ToastStyle {
     }
     
     
+    @MainActor
     private func parameters(with configuration: Configuration) -> Parameters {
         var parameters = self.initialParameters
         

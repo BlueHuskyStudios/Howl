@@ -33,14 +33,15 @@ public extension Image {
 
 public extension Image {
     
+    @MainActor
     func nativeImage() -> NativeImage? {
-        let view = NoInsetHostingView(rootView: self)
+        let renderer = ImageRenderer(content: self)
         #if canImport(AppKit)
-            view.setFrameSize(view.fittingSize)
-            return view.bitmapImage()
+            renderer.scale = NSScreen.main?.backingScaleFactor ?? 1.0
+            return renderer.nsImage
         #elseif canImport(UIKit)
-            view.view.frame.size = view.preferredContentSize
-            return view.view.bitmapImage()
+            renderer.scale = UIScreen.main.scale
+            return renderer.uiImage
         #endif
     }
 }
@@ -49,62 +50,62 @@ public extension Image {
 
 // MARK: - Private utilities
 
-private class NoInsetHostingView<V: View>: NativeSwiftUiHost<V> {
-    #if canImport(AppKit)
-    @inline(__always)
-    override var safeAreaInsets: LegacyEdgeInsets { .init() }
-    #elseif canImport(UIKit)
-    #endif
-}
-
-
-
-private extension NativeView {
-    
-    func bitmapImage() -> NativeImage? {
-        #if canImport(AppKit)
-        guard let layer else { return nil }
-
-        let scale = window?.backingScaleFactor ?? 1.0
-        let pixelWidth  = Int((bounds.width  * scale).rounded())
-        let pixelHeight = Int((bounds.height * scale).rounded())
-
-        guard pixelWidth > 0, pixelHeight > 0 else { return nil }
-
-        guard let context = CGContext(
-            data: nil,
-            width: pixelWidth,
-            height: pixelHeight,
-            bitsPerComponent: 8,
-            bytesPerRow: 0,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
-                      | CGBitmapInfo.byteOrder32Little.rawValue
-        ) else { return nil }
-
-        // Scale up for HiDPI, then render.
-        context.scaleBy(x: scale, y: scale)
-        layer.render(in: context)
-
-        guard let cgImage = context.makeImage() else { return nil }
-        return NSImage(cgImage: cgImage, size: bounds.size)
-        #elseif canImport(UIKit)
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { context in
-            layer.render(in: context.cgContext)
-        }
-        #endif
-    }
-}
-
-
-
+//private class NoInsetHostingView<V: View>: NativeSwiftUiHost<V> {
+//    #if canImport(AppKit)
+//    @inline(__always)
+//    override var safeAreaInsets: LegacyEdgeInsets { .init() }
+//    #elseif canImport(UIKit)
+//    #endif
+//}
+//
+//
+//
+//private extension NativeView {
+//    
+//    func bitmapImage() -> NativeImage? {
+//        #if canImport(AppKit)
+//        guard let layer else { return nil }
+//
+//        let scale = window?.backingScaleFactor ?? 1.0
+//        let pixelWidth  = Int((bounds.width  * scale).rounded())
+//        let pixelHeight = Int((bounds.height * scale).rounded())
+//
+//        guard pixelWidth > 0, pixelHeight > 0 else { return nil }
+//
+//        guard let context = CGContext(
+//            data: nil,
+//            width: pixelWidth,
+//            height: pixelHeight,
+//            bitsPerComponent: 8,
+//            bytesPerRow: 0,
+//            space: CGColorSpaceCreateDeviceRGB(),
+//            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+//                      | CGBitmapInfo.byteOrder32Little.rawValue
+//        ) else { return nil }
+//
+//        // Scale up for HiDPI, then render.
+//        context.scaleBy(x: scale, y: scale)
+//        layer.render(in: context)
+//
+//        guard let cgImage = context.makeImage() else { return nil }
+//        return NSImage(cgImage: cgImage, size: bounds.size)
+//        #elseif canImport(UIKit)
+//        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+//        return renderer.image { context in
+//            layer.render(in: context.cgContext)
+//        }
+//        #endif
+//    }
+//}
+//
+//
+//
 #if canImport(AppKit)
-typealias NativeView = NSView
-typealias NativeSwiftUiHost<V: View> = NSHostingView<V>
+//typealias NativeView = NSView
+//typealias NativeSwiftUiHost<V: View> = NSHostingView<V>
 typealias LegacyEdgeInsets = NSEdgeInsets
 #elseif canImport(UIKit)
-typealias NativeView = UIView
-typealias NativeSwiftUiHost<V: View> = UIHostingController<V>
+//typealias NativeView = UIView
+//typealias NativeSwiftUiHost<V: View> = UIHostingController<V>
 typealias LegacyEdgeInsets = UIEdgeInsets
 #endif

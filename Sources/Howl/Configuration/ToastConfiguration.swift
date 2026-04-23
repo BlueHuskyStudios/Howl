@@ -17,6 +17,11 @@ import FunctionTools
 /// This is all about the semantics of any toast, regardless of its styling. For fine-grained control of toast styling, create a custom ``ToastStyle``
 public struct ToastConfiguration {
     
+    /// This allows us to track changes across otherwise-identical toast configurations.
+    ///
+    /// This does run the risk that, if SwiftUI decides to initialize the same toast configuration many times, we get many UUIDs. This field hedges its bets that this will be okay.
+    private let id = UUID()
+    
     /// The text to display inside the toast
     public let text: AttributedString
     
@@ -146,7 +151,9 @@ extension ToastConfiguration.CallToAction: Hashable {
 extension ToastConfiguration: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(text)
-        hasher.combine(icon?.nativeImage())
+        if nil != icon {
+            hasher.combine(id) // Can't hash an icon, so this ID will be the standin until a better solution is found
+        }
         hasher.combine(duration)
         hasher.combine(callToAction)
     }

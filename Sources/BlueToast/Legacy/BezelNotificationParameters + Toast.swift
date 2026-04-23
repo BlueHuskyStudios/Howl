@@ -24,7 +24,7 @@ public extension BezelNotificationParameters.TimeToLive {
             self = .short
         case .importantText:
             self = .long
-        case .criticalAlert:
+        case .manualDismiss:
             self = .forever
         }
     }
@@ -50,7 +50,7 @@ public extension ToastConfiguration.Duration {
         case .long:
             self = .importantText
         case .forever:
-            self = .criticalAlert
+            self = .manualDismiss
             
         case .exactly(seconds: let ttlSeconds):
             let closestDuration = Self

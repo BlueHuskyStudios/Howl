@@ -45,6 +45,9 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
                     
                     VStack(spacing: 24) {
                         TextField("Text", text: $text)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(idealWidth: 100, maxWidth: 200)
+                            .fixedSize(horizontal: false, vertical: false)
                         Toggle("Show", isOn: $show)
                         Toggle("Use icon", isOn: $useIcon)
                         Toggle("Use CTA", isOn: $useCta)
@@ -65,7 +68,7 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
                 .toast(
                     isPresented: $show,
                     text: text,
-                    duration: .criticalAlert,
+                    duration: .manualDismiss,
                     icon: useIcon ? Image(systemName: "hammer.fill").resizable() : nil,
                     action: useCta ? .init(label: "Undo", userDidInteract: null) : nil,
                 )

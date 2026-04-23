@@ -79,13 +79,13 @@ public extension ToastConfiguration {
         /// - "Message saved to drafts." + "Resume editing"
         case importantText
         
-        /// The toast alerts the user of something so critical that they must be able to see the toast even if they weren't using the device at the time it was presented
+        /// The toast alerts the user of something so critical that they must be able to see the toast even if they weren't using the device at the time it was presented. The toast won't be automatically hidden; you or the user must hide it.
         ///
         /// Good examples include:
         /// - "You've been logged out due to inactivity"
         /// - "Update ready" + "Quit & update"
         /// - "A fatal error occurred and the app had to restart" + "File a bug"
-        case criticalAlert
+        case manualDismiss
     }
 }
 

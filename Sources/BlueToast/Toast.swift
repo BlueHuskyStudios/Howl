@@ -12,6 +12,11 @@ import CrossKitTypes
 
 
 
+/// How long the presentation animation takes
+private let presentationAnimationLength: TimeInterval = 0.5
+
+
+
 // MARK: - API
 
 public extension View {
@@ -110,6 +115,9 @@ private struct Toast: ViewModifier {
     private var toastStyle
     
     @State
+    private var disableToast = true
+    
+    @State
     private var disappearDate: Date = .distantPast
     
     @State
@@ -141,10 +149,14 @@ private struct Toast: ViewModifier {
                     #endif
                     
                     if isPresented {
-//                        Text(String(describing: colorScheme) + " mode")
-//                            .offset(x: 0, y: 200)
                         AnyView(toastStyle.body(configuration, environment: environment))
-                            .transition(.blurReplace(.upUp).animation(.bouncy))
+                            .disabled(disableToast)
+                            .task { // Give the user a moment to notice that the toast is shown before interactive elements become interactive
+                                disableToast = true
+                                try? await Task.sleep(for: .seconds(presentationAnimationLength + 0.2))
+                                disableToast = false
+                            }
+                            .transition(.blurReplace(.upUp).animation(.bouncy(duration: presentationAnimationLength)))
                     }
                     
                     Rectangle()
@@ -171,7 +183,6 @@ private struct Toast: ViewModifier {
                             }
                         }
                 }
-//                .animation(.bouncy, value: configuration)
                 .animation(.bouncy, value: isPresented)
             }
     }

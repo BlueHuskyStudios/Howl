@@ -32,19 +32,18 @@ public struct CapsuleToastStyle: ToastStyle {
                                     .fill(.ultraThinMaterial.blendMode(.multiply))
                             }
                         }
-                        .id("text").tag("text")
-                        .zIndex(1)
+//                        .zIndex(1)
                     
                     if let action = configuration.callToAction {
                         ctaButton(action: action)
-                            .id("CTA").tag("CTA")
                             .transition(.move(edge: .leading).combined(with: .opacity).animation(.bouncy))
-                            .zIndex(0)
+//                            .zIndex(0)
                     }
                 }
                 .shadow(radius: 6, y: 2)
                 .font(.body)
                 .geometryGroup()
+                .contentTransition(.interpolate)
                 .animation(.bouncy, value: configuration)
             }
             .padding(.bottom, 24)

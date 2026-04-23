@@ -15,6 +15,11 @@ private let cornerRadius: CGFloat = 12
 
 
 
+/// A toast style like the classic square notifications that Apple devices have shown over the years.
+///
+/// This was once the default style to display volume changes on OS X and iOS, and is still how Xcode displays build notifications.
+/// This mimics that style, recreating it from scratch.
+/// This displays the bezel inside a view. If you want it to display for the whole OS, on top of all windows, use ``SystemBezelToastStyle`` instead (only available on macOS).
 public struct BezelToastStyle: ToastStyle {
     
     private let shape = RoundedRectangle(cornerRadius: cornerRadius)
@@ -146,6 +151,12 @@ private extension BezelToastStyle {
 
 
 public extension ToastStyle where Self == BezelToastStyle {
+    
+    /// A toast style like the classic square notifications that Apple devices have shown over the years.
+    ///
+    /// This was once the default style to display volume changes on OS X and iOS, and is still how Xcode displays build notifications.
+    /// This mimics that style, recreating it from scratch.
+    /// This displays the bezel inside a view. If you want it to display for the whole OS, on top of all windows, use ``.systemBezel`` instead (only available on macOS).
     static var bezel: Self { Self.init() }
 }
 

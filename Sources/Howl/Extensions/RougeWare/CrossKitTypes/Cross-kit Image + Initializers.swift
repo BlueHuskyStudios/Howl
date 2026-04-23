@@ -63,13 +63,30 @@ private extension NativeView {
     
     func bitmapImage() -> NativeImage? {
         #if canImport(AppKit)
-        guard let rep = bitmapImageRepForCachingDisplay(in: bounds) else {
-            return nil
-        }
-        cacheDisplay(in: bounds, to: rep)
-        guard let cgImage = rep.cgImage else {
-            return nil
-        }
+        guard let layer else { return nil }
+
+        let scale = window?.backingScaleFactor ?? 1.0
+        let pixelWidth  = Int((bounds.width  * scale).rounded())
+        let pixelHeight = Int((bounds.height * scale).rounded())
+
+        guard pixelWidth > 0, pixelHeight > 0 else { return nil }
+
+        guard let context = CGContext(
+            data: nil,
+            width: pixelWidth,
+            height: pixelHeight,
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+                      | CGBitmapInfo.byteOrder32Little.rawValue
+        ) else { return nil }
+
+        // Scale up for HiDPI, then render.
+        context.scaleBy(x: scale, y: scale)
+        layer.render(in: context)
+
+        guard let cgImage = context.makeImage() else { return nil }
         return NSImage(cgImage: cgImage, size: bounds.size)
         #elseif canImport(UIKit)
         let renderer = UIGraphicsImageRenderer(bounds: bounds)

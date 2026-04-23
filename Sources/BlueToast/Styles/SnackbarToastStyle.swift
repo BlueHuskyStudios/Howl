@@ -21,6 +21,7 @@ public struct SnackbarToastStyle: ToastStyle {
             
             HStack(spacing: 12) {
                 Text(configuration.text)
+                    .contentTransition(.interpolate)
                 
                 ctaButtonOrNaw(configuration: configuration)
                     .animation(.bouncy, value: configuration)
@@ -74,6 +75,7 @@ public struct SnackbarToastStyle: ToastStyle {
             #else
                 .buttonStyle(.borderless)
             #endif
+                .contentTransition(.interpolate)
                 .transition(.move(edge: .leading).combined(with: .blurReplace).animation(.bouncy))
         }
     }

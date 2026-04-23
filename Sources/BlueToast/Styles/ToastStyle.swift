@@ -9,7 +9,10 @@ import SwiftUI
 
 
 
-/// The visual appearance of a toast
+/// The visual appearance of a toast.
+///
+/// - Note: If you're implementing it, you must be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view (which _will_ be rendered within SwiftUI), and that build function will be passed the current environment values in case it needs them.
+///         If you need to use things like `@State` or `@EnvironmentObject` variables, you can use a custom SwiftUI view that's somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.
 public protocol ToastStyle {
     
     /// Generates the toast's visual style
@@ -40,6 +43,10 @@ public extension View {
 
 
 public extension ToastStyle {
+    
+    /// Describes how a toast should appear on-screen.
+    ///
+    /// This is all about the semantics of any toast, regardless of its styling. For fine-grained control of toast styling, create a custom ``ToastStyle``
     typealias Configuration = ToastConfiguration
 }
 
@@ -85,7 +92,7 @@ internal extension ToastStyle.Configuration.Duration {
                 .importantText:
             appearDate + inSeconds
             
-        case .criticalAlert:
+        case .manualDismiss:
                 .distantFuture
         }
     }
@@ -95,7 +102,7 @@ internal extension ToastStyle.Configuration.Duration {
         switch self {
         case .actionFeedback: 2.5
         case .importantText: 6
-        case .criticalAlert: 60 * 60 * 24 * 365.242189 // 1 year
+        case .manualDismiss: 60 * 60 * 24 * 365.242189 // 1 year
         }
     }
     
@@ -109,6 +116,7 @@ internal extension ToastStyle.Configuration.Duration {
 // MARK: - Environment
 
 internal extension EnvironmentValues {
+    /// This is how this framework passes around the toast style as needed
     var toastStyle: any ToastStyle {
         get { self[ToastStyle.EnvironmentKey.self] }
         set { self[ToastStyle.EnvironmentKey.self] = newValue }

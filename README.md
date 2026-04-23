@@ -4,7 +4,7 @@
 
 
 
-![macOS 14+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
 
 
 
@@ -61,7 +61,14 @@ This repo comes with some premade styles to get you started!
 
 ### System Bezel
 
+![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue)
+
 You know those square notifications macOS does when you change the volume 'n' stuff? This is like that, but you can actually use it in your projects.
+
+```swift
+myView
+    .toastStyle(.systemBezel)
+```
 
 ![A comparison between this package's bezel notifications and the macOS native ones. They're identical, except this package's version is more customizable.](./macOS%20%26%20BezelNotification%20comparison.png)
 
@@ -79,15 +86,30 @@ Of course, because of how system bezels work, they're only available on macOS. O
 
 ### Bezel
 
+![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+
 This is the in-window version of the System Bezel toast, which is available on all supported platforms.
+
+```swift
+myView
+    .toastStyle(.bezel)
+```
+
+![Screenshots of the bezel toast](./examples/toast-bezel.png)
 
 
 
 ### Snackbar
 
+![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+
+
+
 
 
 ### Capsule
+
+![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
 
 
 

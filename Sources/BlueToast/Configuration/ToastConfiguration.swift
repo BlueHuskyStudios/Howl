@@ -1,6 +1,6 @@
 //
 //  ToastConfiguration.swift
-//  BlueToast
+//  Howl
 //
 //  Created by Ky on 2026-04-21.
 //

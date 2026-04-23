@@ -1,19 +1,16 @@
-> BlueToast is version 3 of the BezelNotification package. Original functionality will be preserved, but future focus will be on in-window toasts.
+> Howl is version 3 of the BezelNotification package. Original functionality will be preserved, but future focus will be on in-window toasts. You can still `import BezelNotification`, but you're encouraged to `import Howl` instead.
 >
-> Version 3 is currently in **alpha testing**, meaning that some functionality works and some doesn't. Please refrain from submitting bug reports unless you're in the Blue Husky Alpha Testers group.
+> Version 3 is currently in **beta testing**, meaning that some functionality works and some doesn't. Please refrain from submitting bug reports unless you're in the Blue Husky Beta Testers group.
 
 
 
 ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
 
+# Howl: Toast notifications for Apple platforms
 
+Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps in Apple platforms.
 
-
-# BlueToast
-
-Formerly (`BH`)`BezelNotification`, BlueToast is a way to present toasts in your apps across all Apple platforms.
-
-![BlueToast examples](./docs/images/blueToastExamples.png)
+![Howl examples](./docs/images/examples.png)
 
 
 
@@ -145,4 +142,4 @@ All these parameters (aside from the callback) can be encapsulated in a `BezelPa
 
 ## Try it out!
 
-To try out BlueToast without instaling it into your own project first, you can use [this demo app I put together](https://github.com/KyLeggiero/BlueToast-Demo-App)!
+To try out Howl without instaling it into your own project first, you can use [this demo app I put together](https://github.com/KyLeggiero/Howl-Demo-App)!

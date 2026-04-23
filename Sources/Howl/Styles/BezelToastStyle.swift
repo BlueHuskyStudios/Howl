@@ -60,16 +60,14 @@ private extension BezelToastStyle {
             VStack {
                 if let icon = config.icon {
                     let bezelSize = parameters.size.cgSize
-                    let imageSize = CGSize(square: 999)
-                        .scaled(within: bezelSize * 0.6,
-                                method: .fit,
-                                direction: .upOrDown)
+                    let idealImageSize = CGSize(square: (bezelSize * 0.6).minMeasurement)
                     
                     VStack(spacing: 0) {
                         Spacer()
                         icon
+                            .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: imageSize.width, maxHeight: imageSize.height)
+                            .frame(maxWidth: idealImageSize.width, maxHeight: idealImageSize.height)
                         Spacer()
                     }
                     .transition(.blurReplace)

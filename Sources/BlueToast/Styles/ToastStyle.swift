@@ -11,8 +11,8 @@ import SwiftUI
 
 /// The visual appearance of a toast.
 ///
-/// - Note: If you're implementing it, you must be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view (which _will_ be rendered within SwiftUI), and that build function will be passed the current environment values in case it needs them.
-///         If you need to use things like `@State` or `@EnvironmentObject` variables, you can use a custom SwiftUI view that's somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.
+/// - Note: If you're implementing it, you must be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view in its `body` (which _will_ be rendered within SwiftUI), and that body function will be passed the current environment values in case it needs them.
+///         If you need to use things like `@State` or `@EnvironmentObject` fields, you can use a custom SwiftUI view somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.
 public protocol ToastStyle {
     
     /// Generates the toast's visual style

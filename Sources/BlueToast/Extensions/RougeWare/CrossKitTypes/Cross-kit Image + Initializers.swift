@@ -1,9 +1,8 @@
 //
 //  Cross-kit Image + Initializers.swift
-//  BlueToast Demo App
+//  Howl
 //
-//  Created by The Northstar✨ System on 2024-02-14.
-//  Copyright © 2024 Ky Leggiero. All rights reserved.
+//  Created by Ky on 2024-02-14.
 //
 
 import Foundation

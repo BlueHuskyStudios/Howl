@@ -24,6 +24,15 @@ public struct BezelToastStyle: ToastStyle {
     
     private let shape = RoundedRectangle(cornerRadius: cornerRadius)
     
+    public let effect: Effect?
+    
+    
+    /// Create a new bezel toast style
+    /// - Parameter effect: _optional_ - What effect the bezel toast should be designed with. If omitted or set to `nil`, a good default will be selected for the current platform.
+    public init(effect: Effect? = nil) {
+        self.effect = effect
+    }
+    
     
     public func body(_ configuration: Configuration, environment: EnvironmentValues) -> some View {
         ZStack(alignment: .bottom) {
@@ -39,6 +48,61 @@ public struct BezelToastStyle: ToastStyle {
 }
 
 
+
+// MARK: - Effect
+
+public extension BezelToastStyle {
+    enum Effect {
+        
+        /// The vibrant material ("frosted glass") design that was introduced in Mac OS X Yosemite and iOS 7
+        case vibrantMaterial
+        
+        /// The liquid glass design that was introduced in 26
+        @available(macOS 26, iOS 26, *)
+        case liquidGlass
+    }
+}
+
+
+
+public extension BezelToastStyle.Effect {
+    var localizedDescription: LocalizedStringKey {
+        switch self {
+        case .vibrantMaterial:
+            "Vibrant material"
+            
+        case .liquidGlass:
+            "Liquid glass"
+        }
+    }
+}
+
+
+
+extension BezelToastStyle.Effect: CaseIterable {
+    public static var allCases: [BezelToastStyle.Effect] {
+        if #available(macOS 26, iOS 26, *) {
+            [.vibrantMaterial, .liquidGlass]
+        }
+        else {
+            [.vibrantMaterial]
+        }
+    }
+}
+
+
+
+extension BezelToastStyle.Effect: Hashable {}
+
+
+
+extension BezelToastStyle.Effect: Identifiable {
+    public var id: Self { self }
+}
+
+
+
+// MARK: - Bezel view building
 
 private extension BezelToastStyle {
     
@@ -60,16 +124,14 @@ private extension BezelToastStyle {
             VStack {
                 if let icon = config.icon {
                     let bezelSize = parameters.size.cgSize
-                    let imageSize = CGSize(square: 999)
-                        .scaled(within: bezelSize * 0.6,
-                                method: .fit,
-                                direction: .upOrDown)
+                    let idealImageSize = CGSize(square: (bezelSize * 0.6).minMeasurement)
                     
                     VStack(spacing: 0) {
                         Spacer()
                         icon
+                            .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: imageSize.width, maxHeight: imageSize.height)
+                            .frame(maxWidth: idealImageSize.width, maxHeight: idealImageSize.height)
                         Spacer()
                     }
                     .transition(.blurReplace)
@@ -87,7 +149,11 @@ private extension BezelToastStyle {
     private func renderedMessage(config: Configuration, parameters: BezelNotificationParameters) -> some View {
         Text(config.text)
 //            .font(.init(parameters.messageLabelFont)) <- was not friendly with accessibility sizes
-            .fontWeight(.medium)
+        #if os(macOS)
+            .font(.system(.title, weight: .medium))
+        #else
+            .font(.system(.title3, weight: .medium))
+        #endif
             .multilineTextAlignment(.center)
             .lineLimit(nil == config.icon ? nil : 1)
             .frame(maxHeight: nil == config.icon ? .infinity : nil)
@@ -104,7 +170,6 @@ private extension BezelToastStyle {
         environment: EnvironmentValues,
         @ViewBuilder content: () -> Content)
     -> some View {
-        
         if #available(macOS 15, iOS 18, *) {
             _bezel(config: config, parameters: parameters, environment: environment, content: content)
                 .materialActiveAppearance(.active)
@@ -121,10 +186,10 @@ private extension BezelToastStyle {
         environment: EnvironmentValues,
         content: () -> Content)
     -> some View {
-        Rectangle()
-            .fill(.thinMaterial)
-            .frame(width: parameters.size.cgSize.width,
+        bezelBasis
+            .frame(width: environment.dynamicTypeSize.isAccessibilitySize ? nil : parameters.size.cgSize.width,
                    height: parameters.size.cgSize.height)
+//            .frame(maxWidth: environment.dynamicTypeSize.isAccessibilitySize ? 50 : parameters.size.cgSize.width)
             .overlay {
                 ZStack {
                     Color(parameters.backgroundTint)
@@ -136,6 +201,26 @@ private extension BezelToastStyle {
                 .blendMode(bestForegroundBlendMode(in: environment.colorScheme))
             }
             .clipShape(RoundedRectangle(cornerRadius: BezelNotificationParameters.defaultCornerRadius))
+    }
+    
+    
+    @ViewBuilder
+    private var bezelBasis: some View {
+        switch effect {
+        case .liquidGlass,
+                .none:
+            if #available(macOS 26, iOS 26, *) {
+                Rectangle()
+                    .glassEffect(in: RoundedRectangle(cornerRadius: BezelNotificationParameters.defaultCornerRadius))
+            }
+            else {
+                Rectangle()
+                    .fill(.thinMaterial)
+            }
+        case .vibrantMaterial:
+            Rectangle()
+                .fill(.thinMaterial)
+        }
     }
     
     
@@ -157,7 +242,17 @@ public extension ToastStyle where Self == BezelToastStyle {
     /// This was once the default style to display volume changes on OS X and iOS, and is still how Xcode displays build notifications.
     /// This mimics that style, recreating it from scratch.
     /// This displays the bezel inside a view. If you want it to display for the whole OS, on top of all windows, use ``.systemBezel`` instead (only available on macOS).
-    static var bezel: Self { Self.init() }
+    static var bezel: Self { Self.init(effect: nil) }
+    
+    
+    /// A toast style like the classic square notifications that Apple devices have shown over the years.
+    /// 
+    /// This was once the default style to display volume changes on OS X and iOS, and is still how Xcode displays build notifications.
+    /// This mimics that style, recreating it from scratch.
+    /// This displays the bezel inside a view. If you want it to display for the whole OS, on top of all windows, use ``.systemBezel`` instead (only available on macOS).
+    ///
+    /// - Parameter effect: You can use this field to specify which material effect is used for the bezel toast
+    static func bezel(effect: Self.Effect?) -> Self { Self.init(effect: effect) }
 }
 
 

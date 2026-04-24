@@ -149,7 +149,11 @@ private extension BezelToastStyle {
     private func renderedMessage(config: Configuration, parameters: BezelNotificationParameters) -> some View {
         Text(config.text)
 //            .font(.init(parameters.messageLabelFont)) <- was not friendly with accessibility sizes
+        #if os(macOS)
+            .font(.system(.title, weight: .medium))
+        #else
             .font(.system(.title3, weight: .medium))
+        #endif
             .multilineTextAlignment(.center)
             .lineLimit(nil == config.icon ? nil : 1)
             .frame(maxHeight: nil == config.icon ? .infinity : nil)

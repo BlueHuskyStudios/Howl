@@ -10,12 +10,16 @@
 
 Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps in Apple platforms.
 
-![TODO: Hero Howl examples](./examples/hero.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/Mac%20screenshots%20%28dark%29.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/Mac%20screenshots%20%28light%29.png">
+  <img alt="Howl demo on macOS" src="./examples/Mac%20screenshots%20%28light%29.png">
+</picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./examples/iPhone%20screenshots%20%28dark%29.png">
   <source media="(prefers-color-scheme: light)" srcset="./examples/iPhone%20screenshots%20%28light%29.png">
-  <img alt="Hero Howl examples" src="./examples/iPhone%20screenshots%20%28light%29.png">
+  <img alt="Howl demo on iOS" src="./examples/iPhone%20screenshots%20%28light%29.png">
 </picture>
 
 

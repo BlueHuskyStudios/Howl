@@ -12,6 +12,12 @@ Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps
 
 ![TODO: Hero Howl examples](./examples/hero.png)
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/iPhone%20screenshots%20%28dark%29.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/iPhone%20screenshots%20%28light%29.png">
+  <img alt="Hero Howl examples" src="./examples/iPhone%20screenshots%20%28light%29.png">
+</picture>
+
 
 
 ## What is a toast?
@@ -67,7 +73,7 @@ myView
     .toastStyle(.systemBezel)
 ```
 
-![A comparison between this package's bezel notifications and the macOS native ones. They're identical, except this package's version is more customizable.](./macOS%20%26%20BezelNotification%20comparison.png)
+![A comparison between this package's bezel notifications and the macOS native ones. They're identical, except this package's version is more customizable.](./examples/macOS%20%26%20BezelNotification%20comparison.png)
 
 > This does _not_ use any secret system APIs (but instead creates its own bezel notifications from scratch), so this cannot interact with nor affect macOS's own system bezel notifications. If one is already showing, this might obscure it or be obscured by it instead of replacing it or waiting for it to hide.
 > 

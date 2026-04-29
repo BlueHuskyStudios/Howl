@@ -14,7 +14,7 @@ public struct SnackbarToastStyle: ToastStyle {
     private let shape = RoundedRectangle(cornerRadius: 8)
     
     
-    public func body(_ configuration: Configuration, environment _: EnvironmentValues) -> some View {
+    public func body(_ configuration: Configuration, environment: EnvironmentValues) -> some View {
         ZStack(alignment: .bottomLeading) {
             Rectangle()
                 .fill(.clear)
@@ -29,27 +29,29 @@ public struct SnackbarToastStyle: ToastStyle {
             .font(.body)
             .padding()
             .background {
-                background
+                background(in: environment)
                     .animation(.bouncy, value: configuration)
             }
             .padding()
-//            .geometryGroup()
-            
-            .colorScheme(.dark)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .compositingGroup()
         .transition(.move(edge: .bottom).animation(.bouncy))
-//        .animation(.bouncy)
     }
+}
+
+
+
+private extension SnackbarToastStyle {
     
-    
+    /// The background of the snackbar, making the "bar" shape of it
+    ///
+    /// - Parameter environment: The current environment values, so the snackbar can be built correctly
     @ViewBuilder
-    private var background: some View {
+    func background(in environment: EnvironmentValues) -> some View {
         if #available(macOS 26, iOS 26, *) {
             shape
                 .fill(.clear)
-                .glassEffect(.regular.tint(.black.opacity(0.5)), in: shape)
+                .glassEffect(.regular.tint(glassEffectTint(in: environment)), in: shape)
                 .shadow(radius: 6, y: 2)
         }
         else {
@@ -66,17 +68,43 @@ public struct SnackbarToastStyle: ToastStyle {
     }
     
     
+    /// The call-to-action button, if the configuration calls for it.
+    ///
+    /// - Parameter configuration: The toast configuration, which might describe the CTA
     @ViewBuilder
-    private func ctaButtonOrNaw(configuration: Configuration) -> some View {
+    func ctaButtonOrNaw(configuration: Configuration) -> some View {
         if let action = configuration.callToAction {
             Button(action.label, action: action.userDidInteract)
-            #if os(macOS)
-                .buttonStyle(.link)
-            #else
-                .buttonStyle(.borderless)
-            #endif
+                .fontWeight(.medium)
+                .foregroundStyle(ctaButtonForegroundColor)
+                .shadow(color: .accentColor.opacity(0.5), radius: 8)
+                .buttonStyle(.plain)
                 .contentTransition(.interpolate)
                 .transition(.move(edge: .leading).combined(with: .blurReplace).animation(.bouncy))
+        }
+    }
+    
+    
+    /// The foreground color of the call-to-action button
+    var ctaButtonForegroundColor: Color {
+        if #available(iOS 18, macOS 15, *) {
+            Color.accentColor.mix(with: .primary, by: 0.1)
+        }
+        else {
+            Color.accentColor
+        }
+    }
+    
+    
+    /// The most-appropriate tint of the glass effect in the current environment
+    ///
+    /// - Parameter environment: The current environment values, so the snackbar can be built correctly
+    func glassEffectTint(in environment: EnvironmentValues) -> Color {
+        switch environment.colorScheme {
+        case .dark:  .black.opacity(0.6)
+        case .light: .clear
+            
+        @unknown default: .clear
         }
     }
 }

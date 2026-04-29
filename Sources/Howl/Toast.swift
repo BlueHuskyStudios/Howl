@@ -210,10 +210,15 @@ private extension Toast {
                 text: configuration.text,
                 duration: configuration.duration,
                 icon: configuration.icon,
-                callToAction: .init(label: cta.label, userDidInteract: {
-                    isPresented = false
-                    cta.userDidInteract()
-                }))
+                callToAction: .init(
+                    label: cta.label,
+                    dismissOnInteraction: cta.dismissOnInteraction,
+                    userDidInteract: {
+                        isPresented = false
+                        cta.userDidInteract()
+                    }
+                )
+            )
         }
         else {
             return configuration

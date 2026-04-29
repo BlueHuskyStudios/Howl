@@ -128,7 +128,7 @@ myView
     .toastStyle(.snackbar)
 ```
 
-![TODO: Screenshots of the bezel toast](./examples/toast-snackbar.png)
+![TODO: Screenshots of the snackbar toast](./examples/toast-snackbar.png)
 
 
 
@@ -145,7 +145,7 @@ myView
     .toastStyle(.capsule)
 ```
 
-![TODO: Screenshots of the bezel toast](./examples/toast-capsule.png)
+![TODO: Screenshots of the capsule toast](./examples/toast-capsule.png)
 
 
 

@@ -149,7 +149,7 @@ private struct Toast: ViewModifier {
                     #endif
                     
                     if isPresented {
-                        AnyView(toastStyle.body(configuration, environment: environment))
+                        AnyView(toastStyle.body(actualConfiguration, environment: environment))
                             .disabled(disableToast)
                             .task { // Give the user a moment to notice that the toast is shown before interactive elements become interactive
                                 disableToast = true
@@ -186,10 +186,13 @@ private struct Toast: ViewModifier {
                 .animation(.bouncy, value: isPresented)
             }
     }
+}
+
+
+
+private extension Toast {
     
-    
-    
-    private func wrapUpDippear() {
+    func wrapUpDippear() {
         withAnimation(.bouncy) {
             isPresented = false
             timerStorage?.cancel()
@@ -198,7 +201,30 @@ private struct Toast: ViewModifier {
     }
     
     
-    #if DEBUG
+    /// Modifies the dev-specified configuration as-needed
+    var actualConfiguration: ToastConfiguration {
+        if let cta = configuration.callToAction,
+           cta.dismissOnInteraction {
+            // If we have a call-to-action, make the toast disappear when the CTA is called
+            return ToastConfiguration(
+                text: configuration.text,
+                duration: configuration.duration,
+                icon: configuration.icon,
+                callToAction: .init(label: cta.label, userDidInteract: {
+                    isPresented = false
+                    cta.userDidInteract()
+                }))
+        }
+        else {
+            return configuration
+        }
+    }
+}
+
+
+
+#if DEBUG
+private extension Toast {
     @ViewBuilder
     var _debug_infoView: some View {
         ZStack(alignment: .topLeading) {
@@ -231,8 +257,8 @@ private struct Toast: ViewModifier {
     func _debug_infoItem<Value>(_ title: String, value: Value) -> some View {
         Text("\(title): \(Text(String(describing: value)).bold().monospacedDigit())")
     }
-    #endif
 }
+#endif
 
 
 

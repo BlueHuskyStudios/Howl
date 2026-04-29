@@ -116,12 +116,16 @@ public extension ToastConfiguration {
         /// However, styles should still make effort to display longer labels. For example, if the toast says that a pull request was successfully created on GitLab, it would be appropriate for the CTA label to say "Show in GitLab".
         public let label: String
         
+        /// Whether to dismiss the toast when the user interacts with the CTA
+        public let dismissOnInteraction: Bool
+        
         /// This is called when the user interacts with the CTA.
         public let userDidInteract: BlindCallback
         
         
-        public init(label: String, userDidInteract: @escaping BlindCallback) {
+        public init(label: String, dismissOnInteraction: Bool = true, userDidInteract: @escaping BlindCallback) {
             self.label = label
+            self.dismissOnInteraction = dismissOnInteraction
             self.userDidInteract = userDidInteract
         }
     }

@@ -78,7 +78,6 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
 //            Tab("Foo", systemImage: "square", content: { EmptyView() })
 //            Tab("Bar", systemImage: "circle", content: { EmptyView() })
 //        }
-        .frame(minHeight: 500)
     }
 }
 

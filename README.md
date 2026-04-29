@@ -6,7 +6,14 @@
 
 ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
 
-# Howl: Toast notifications for Apple platforms
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./branding/Readme%20banner%20%28dark%20mode%29.png">
+  <source media="(prefers-color-scheme: light)" srcset="./branding/Readme%20banner%20%28light%20mode%29.png">
+  <img alt="Howl: Toasts for SwiftUI" src="./branding/Readme%20banner%20%28light%20mode%29.png">
+</picture>
+
+# Howl: Toast notifications for SwiftUI
 
 Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps in Apple platforms.
 

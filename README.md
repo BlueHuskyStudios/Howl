@@ -18,15 +18,15 @@
 Formerly (`BH`)`BezelNotification`, Howl is a way to present toasts in your apps in Apple platforms.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./examples/Mac%20screenshots%20%28dark%29.png">
-  <source media="(prefers-color-scheme: light)" srcset="./examples/Mac%20screenshots%20%28light%29.png">
-  <img alt="Howl demo on macOS" src="./examples/Mac%20screenshots%20%28light%29.png">
-</picture>
-
-<picture>
   <source media="(prefers-color-scheme: dark)" srcset="./examples/iPhone%20screenshots%20%28dark%29.png">
   <source media="(prefers-color-scheme: light)" srcset="./examples/iPhone%20screenshots%20%28light%29.png">
   <img alt="Howl demo on iOS" src="./examples/iPhone%20screenshots%20%28light%29.png">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/Mac%20screenshots%20%28dark%29.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/Mac%20screenshots%20%28light%29.png">
+  <img alt="Howl demo on macOS" src="./examples/Mac%20screenshots%20%28light%29.png">
 </picture>
 
 
@@ -113,7 +113,11 @@ myView
     .toastStyle(.bezel)
 ```
 
-![TODO: Screenshots of the bezel toast](./examples/toast-bezel.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/sample%20•%20Bezel%20Dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/sample%20•%20Bezel%20Light.png">
+  <img alt="Screenshot of the bezel toast" width="522px" src="./examples/sample%20•%20Bezel%20Light.png">
+</picture>
 
 
 
@@ -128,7 +132,11 @@ myView
     .toastStyle(.snackbar)
 ```
 
-![TODO: Screenshots of the snackbar toast](./examples/toast-snackbar.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/sample%20•%20Snackbar%20Dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/sample%20•%20Snackbar%20Light.png">
+  <img alt="Screenshot of the snackbar toast" width="522px" src="./examples/sample%20•%20Snackbar%20Light.png">
+</picture>
 
 
 
@@ -145,7 +153,11 @@ myView
     .toastStyle(.capsule)
 ```
 
-![TODO: Screenshots of the capsule toast](./examples/toast-capsule.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./examples/sample%20•%20Capsule%20Dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./examples/sample%20•%20Capsule%20Light.png">
+  <img alt="Screenshot of the capsule toast" width="522px" src="./examples/sample%20•%20Capsule%20Light.png">
+</picture>
 
 
 

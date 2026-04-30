@@ -60,7 +60,7 @@ myView
 You can also specify an icon, a duration, and a call-to-action. Toasts are not required to support icons or calls-to-action.
 
 
-### Duration
+### ⏲️ Duration
 
 All toasts let you say how long they show. There are currently three options:
 
@@ -88,7 +88,7 @@ myView
 ```
 
 
-### Icons
+### ♨️ Icons
 
 You can specify any image as an icon for toasts which support them.
 
@@ -102,7 +102,7 @@ myView
 ```
 
 
-### Call to action
+### 🎯 Call to action
 
 Some toasts support a "call-to-action", which is a control (e.g. a button) which offers the user a simple action they can take, related to the toast.
 

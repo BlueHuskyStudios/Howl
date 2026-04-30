@@ -54,7 +54,69 @@ This is designed to strike a balance between ease-of-use and customizability. Fo
 
 ```swift
 myView
-    .toast(isPresented: $isLoading, text: "Loading...", icon: .myLoadingIcon)
+    .toast(isPresented: $isLoading, text: "Link copied")
+```
+
+You can also specify an icon, a duration, and a call-to-action. Toasts are not required to support icons or calls-to-action.
+
+
+### Duration
+
+All toasts let you say how long they show. There are currently three options:
+
+- `actionFeedback` is for toasts which are only shown for a brief moment to confirm that an action occurred. These toasts only remain on-screen long enough to allow the user to read a few words.
+- `importantText` is for toasts which explain something important to the user
+- `manualDismiss` leaves the toast on-screen forever. The dev can dismiss them arbitrarily, and toasts which allow the user to dismiss them can be dismissed by the user.
+
+```swift
+myView
+    .toast(isPresented: $showSavedToast, text: "Saved", duration: .actionFeedback)
+```
+```swift
+myView
+    .toast(
+        isPresented: $showErrorToast,
+        text: """
+            Could not save the file:
+            \(error.localizedDescription)
+            """, 
+        duration: .importantText)
+```
+```swift
+myView
+    .toast(isPresented: $isLoggedOut, text: "You've been logged out", duration: .manualDismiss)
+```
+
+
+### Icons
+
+You can specify any image as an icon for toasts which support them.
+
+```swift
+myView
+    .toast(isPresented: $showBuildSucceededToast, text: "Build succeeded", icon: Image(systemName: "hammer.fill"))
+```
+```swift
+myView
+    .toast(isPresented: $showCelebrationToast, text: "Happy \(birthdayOrdinal) birthday!", icon: Image("party"))
+```
+
+
+### Call to action
+
+Some toasts support a "call-to-action", which is a control (e.g. a button) which offers the user a simple action they can take, related to the toast.
+
+For example, if the toast tells the user that a new item has been created in the background, it might offer a "View" call-to-action which brings that item to the foreground.
+
+```swift
+myView
+    .toast(
+        isPresented: $showItemCreatedToast,
+        text: "Item created",
+        action: .init(label: "View") {
+             navigate(to: newItem)
+        }
+    )
 ```
 
 
@@ -65,7 +127,7 @@ You can further customize the appearance using toast styles.
 
 ```swift
 myView
-    .toast(isPresented: $isLoading, text: "Loading...", icon: .myLoadingIcon)
+    .toast(isPresented: $isLoading, text: "Link copied")
     .toastStyle(.snackbar)
 ```
 

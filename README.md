@@ -4,14 +4,13 @@
 
 
 
-![Swift 5.2+](https://img.shields.io/badge/Swift-5.2+-orange.svg) ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue) [![The Fair License](https://img.shields.io/badge/License-Fair-green.svg)](./LICENSE.txt)
-
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./branding/Readme%20banner%20%28dark%20mode%29.png">
   <source media="(prefers-color-scheme: light)" srcset="./branding/Readme%20banner%20%28light%20mode%29.png">
   <img alt="Howl: Toasts for SwiftUI" src="./branding/Readme%20banner%20%28light%20mode%29.png">
 </picture>
+
+![Swift 5.2+](https://img.shields.io/badge/Swift-5.2+-orange.svg) ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue) [![The Fair License](https://img.shields.io/badge/License-Fair-green.svg)](./LICENSE.txt) ![](https://img.shields.io/github/release-date/BlueHuskyStudios/Howl?display_date=published_at&label=Last%20updated)
 
 # Howl: Toast notifications for SwiftUI
 

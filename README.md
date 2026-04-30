@@ -40,7 +40,12 @@ They're a very common paradigm in Android, and Apple system-level things sometim
 
 Here's some examples from outside this library:
 
-![TODO: Examples of other toast messages](./docs/images/otherToastExamples.png)
+![Examples of external toast messages](./examples/External%20examples.png)
+
+> - ↖️ Snackbar example from [Material Design M3 guidelines](https://m3.material.io/components/snackbar)
+> - ↗️ Android toast example from [Android Developers toast documentation](https://developer.android.com/guide/topics/ui/notifiers/toasts)
+> - ↙️ macOS bezel notification from Xcode 13 on macOS 12
+> - ↘️ Apple Pencil charging notification from iPadOS 18
 
 
 ## Usage

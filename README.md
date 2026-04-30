@@ -1,6 +1,4 @@
 > Howl is version 3 of the BezelNotification package. Original functionality will be preserved, but future focus will be on in-window toasts. You can still `import BezelNotification`, but you're encouraged to `import Howl` instead.
->
-> Version 3 is currently in **beta testing**, meaning that some functionality works and some doesn't. Please refrain from submitting bug reports unless you're in the Blue Husky Beta Testers group.
 
 
 
@@ -263,4 +261,4 @@ All these parameters (aside from the callback) can be encapsulated in a `BezelPa
 
 ## Try it out!
 
-To try out Howl without instaling it into your own project first, you can use [this demo app I put together](https://github.com/KyLeggiero/Howl-Demo-App)!
+To try out Howl without instaling it into your own project first, you can use [this demo app I put together](https://github.com/KyNorthstar/Howl-Demo-App)!

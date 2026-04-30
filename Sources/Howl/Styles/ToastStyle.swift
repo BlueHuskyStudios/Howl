@@ -102,7 +102,7 @@ internal extension ToastStyle.Configuration.Duration {
         switch self {
         case .actionFeedback: 2.5
         case .importantText: 6
-        case .manualDismiss: 60 * 60 * 24 * 365.242189 // 1 year
+        case .manualDismiss: 60 * 60 * 24 * 365.242189 * 1000 // 1,000 years
         }
     }
     

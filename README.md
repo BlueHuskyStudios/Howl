@@ -4,14 +4,13 @@
 
 
 
-![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
-
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./branding/Readme%20banner%20%28dark%20mode%29.png">
   <source media="(prefers-color-scheme: light)" srcset="./branding/Readme%20banner%20%28light%20mode%29.png">
   <img alt="Howl: Toasts for SwiftUI" src="./branding/Readme%20banner%20%28light%20mode%29.png">
 </picture>
+
+![Swift 5.2+](https://img.shields.io/badge/Swift-5.2+-orange.svg) ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue) [![The Fair License](https://img.shields.io/badge/License-Fair-green.svg)](./LICENSE.txt) ![](https://img.shields.io/github/release-date/BlueHuskyStudios/Howl?display_date=published_at&label=Last%20updated)
 
 # Howl: Toast notifications for SwiftUI
 
@@ -40,7 +39,12 @@ They're a very common paradigm in Android, and Apple system-level things sometim
 
 Here's some examples from outside this library:
 
-![TODO: Examples of other toast messages](./docs/images/otherToastExamples.png)
+![Examples of external toast messages](./examples/External%20examples.png)
+
+> - ↖️ Snackbar example from [Material Design M3 guidelines](https://m3.material.io/components/snackbar)
+> - ↗️ Android toast example from [Android Developers toast documentation](https://developer.android.com/guide/topics/ui/notifiers/toasts)
+> - ↙️ macOS bezel notification from Xcode 13 on macOS 12
+> - ↘️ Apple Pencil charging notification from iPadOS 18
 
 
 ## Usage
@@ -49,7 +53,69 @@ This is designed to strike a balance between ease-of-use and customizability. Fo
 
 ```swift
 myView
-    .toast(isPresented: $isLoading, text: "Loading...", icon: .myLoadingIcon)
+    .toast(isPresented: $isLoading, text: "Link copied")
+```
+
+You can also specify an icon, a duration, and a call-to-action. Toasts are not required to support icons or calls-to-action.
+
+
+### ⏲️ Duration
+
+All toasts let you say how long they show. There are currently three options:
+
+- `actionFeedback` is for toasts which are only shown for a brief moment to confirm that an action occurred. These toasts only remain on-screen long enough to allow the user to read a few words.
+- `importantText` is for toasts which explain something important to the user
+- `manualDismiss` leaves the toast on-screen forever. The dev can dismiss them arbitrarily, and toasts which allow the user to dismiss them can be dismissed by the user.
+
+```swift
+myView
+    .toast(isPresented: $showSavedToast, text: "Saved", duration: .actionFeedback)
+```
+```swift
+myView
+    .toast(
+        isPresented: $showErrorToast,
+        text: """
+            Could not save the file:
+            \(error.localizedDescription)
+            """, 
+        duration: .importantText)
+```
+```swift
+myView
+    .toast(isPresented: $isLoggedOut, text: "You've been logged out", duration: .manualDismiss)
+```
+
+
+### ♨️ Icons
+
+You can specify any image as an icon for toasts which support them.
+
+```swift
+myView
+    .toast(isPresented: $showBuildSucceededToast, text: "Build succeeded", icon: Image(systemName: "hammer.fill"))
+```
+```swift
+myView
+    .toast(isPresented: $showCelebrationToast, text: "Happy \(birthdayOrdinal) birthday!", icon: Image("party"))
+```
+
+
+### 🎯 Call to action
+
+Some toasts support a "call-to-action", which is a control (e.g. a button) which offers the user a simple action they can take, related to the toast.
+
+For example, if the toast tells the user that a new item has been created in the background, it might offer a "View" call-to-action which brings that item to the foreground.
+
+```swift
+myView
+    .toast(
+        isPresented: $showItemCreatedToast,
+        text: "Item created",
+        action: .init(label: "View") {
+             navigate(to: newItem)
+        }
+    )
 ```
 
 
@@ -60,7 +126,7 @@ You can further customize the appearance using toast styles.
 
 ```swift
 myView
-    .toast(isPresented: $isLoading, text: "Loading...", icon: .myLoadingIcon)
+    .toast(isPresented: $isLoading, text: "Link copied")
     .toastStyle(.snackbar)
 ```
 

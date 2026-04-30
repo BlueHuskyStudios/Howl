@@ -4,7 +4,7 @@
 
 
 
-![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue)
+![Swift 5.2+](https://img.shields.io/badge/Swift-5.2+-orange.svg) ![macOS 14+](https://img.shields.io/badge/14%2B-grey?label=macOS&labelColor=blue) ![iOS 17+](https://img.shields.io/badge/17%2B-grey?label=iOS&labelColor=blue) [![The Fair License](https://img.shields.io/badge/License-Fair-green.svg)](./LICENSE.txt)
 
 
 <picture>

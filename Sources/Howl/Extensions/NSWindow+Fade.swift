@@ -1,10 +1,9 @@
 //
 //  NSWindow+Fade.swift
-//  BH Bezel Notification
+//  Howl
 //
 //  Created by Ky Leggiero on 2017-11-09.
 //  Translated to Swift 4 from the original (ObjC): https://gist.github.com/indragiek/1397050
-//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
 #if canImport(AppKit)

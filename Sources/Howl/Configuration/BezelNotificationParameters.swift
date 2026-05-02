@@ -77,7 +77,7 @@ public struct BezelNotificationParameters {
     /// The tint of the bezel notification's background
     var rawBackgroundTint: NativeColor
     
-    /// The distance from the bottom of the bezel notification's bottom at which the baseline of the message label sits
+    /// The distance from the bottom of the bezel notification at which the baseline of the message label sits
     var messageLabelBaselineOffsetFromBottomOfBezel: CGFloat
     
     /// The font used for the message label

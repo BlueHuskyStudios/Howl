@@ -36,10 +36,7 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
     
     
     var body: some View {
-//        TabView {
-//            Tab("Demo", systemImage: "sparkles") {
                 ZStack {
-//                    Image.previewBackground
                     MeshGradient.toastPreview
                         .ignoresSafeArea()
                     
@@ -73,11 +70,6 @@ internal struct ToastPreview<ToastStyleKind: ToastStyle>: View {
                     action: useCta ? .init(label: "Undo", userDidInteract: null) : nil,
                 )
                 .toastStyle(demoToast)
-//            }
-//            
-//            Tab("Foo", systemImage: "square", content: { EmptyView() })
-//            Tab("Bar", systemImage: "circle", content: { EmptyView() })
-//        }
     }
 }
 

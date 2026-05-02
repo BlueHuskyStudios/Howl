@@ -1,5 +1,5 @@
 //
-//  NSImage Extensions.swift
+//  NativeImage Extensions.swift
 //  Howl
 //
 //  Created by Ky Leggiero on 2017-11-10.
@@ -44,25 +44,5 @@ public extension NativeImage {
         #endif
         
         return maskImage
-
-//        guard let context = NSGraphicsContext.current?.cgContext else {
-//            return NSImage(size: size)
-//        }
-//
-//        context.setFillColor(.black)
-//        context.fill(CGRect(origin: .zero, size: size))
-//        context.setShouldAntialias(true)
-//        context.setAllowsAntialiasing(true)
-//
-//        context.addPath(.roundedRect(size: size, cornerRadius: cornerRadius))
-//        context.setFillColor(.white)
-//        context.fillPath(using: .winding)
-//        context.flush()
-//
-//        guard let cgImage = context.makeImage() else {
-//            return NSImage(size: size)
-//        }
-//
-//        return NSImage(cgImage: cgImage, size: size)
     }
 }

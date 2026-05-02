@@ -54,7 +54,7 @@ myView
     .toast(isPresented: $isLoading, text: "Link copied")
 ```
 
-You can also specify an icon, a duration, and a call-to-action. Toasts are not required to support icons or calls-to-action.
+You can also specify an icon, a duration, and a call-to-action. Different toast styles may choose to omit icons andor calls-to-action.
 
 
 ### ⏲️ Duration
@@ -247,11 +247,11 @@ struct MyToastStyle: ToastStyle {
 
 
 extension ToastStyle where Self == MyToastStyle {
-    static let mine: Self { .init() }
+    static var mine: Self { .init() }
 }
 ``` 
 
-All these parameters (aside from the callback) can be encapsulated in a `BezelParameters` object. This is useful for keeping pre-defned bezels, serializing them for user-customization, etc.
+All these parameters (aside from the callback) can be encapsulated in a `BezelNotificationParameters` object. This is useful for keeping pre-defined bezels, serializing them for user-customization, etc.
 
 > ℹ️ Be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view in its `body` (which _will_ be rendered within SwiftUI), and that body function will be passed the current environment values in case it needs them.
 > If you need to use things like `@State` or `@EnvironmentObject` fields, you can use a custom SwiftUI view somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.
@@ -261,4 +261,4 @@ All these parameters (aside from the callback) can be encapsulated in a `BezelPa
 
 ## Try it out!
 
-To try out Howl without instaling it into your own project first, you can use [this demo app I put together](https://github.com/KyNorthstar/Howl-Demo-App)!
+To try out Howl without installing it into your own project first, you can use [this demo app I put together](https://github.com/KyNorthstar/Howl-Demo-App)!

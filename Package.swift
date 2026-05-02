@@ -38,7 +38,7 @@ let package = Package(
             ]),
         
         .testTarget(
-            name: "BezelNotificationTests",
+            name: "HowlTests",
             dependencies: ["Howl"]),
     ]
 )

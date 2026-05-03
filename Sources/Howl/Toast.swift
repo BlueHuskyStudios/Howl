@@ -139,6 +139,10 @@ private struct Toast: ViewModifier {
     
     
     func body(content parent: Content) -> some View {
+        
+        // Only need to allocate this once per `Toast` instance since `configuration` is a `let`
+        let actualConfiguration = actualConfiguration
+        
         parent
             .overlay {
                 ZStack {
@@ -163,27 +167,30 @@ private struct Toast: ViewModifier {
                         .fill(.clear)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .allowsHitTesting(false)
-                    
-                    
-                        .onChange(of: isPresented) { _, isPresented in
-                            if isPresented {
-                                #if DEBUG
-                                _debug_appearCount += 1
-                                #endif
-                                
-                                disappearDate = configuration.disappearDateIfAppearingNow()
-                                
-                                timerStorage = Task {
-                                    try? await Task.sleep(until: disappearDate.instant)
-                                    wrapUpDippear()
-                                }
-                            }
-                            else {
-                                wrapUpDippear()
-                            }
-                        }
                 }
                 .animation(.bouncy, value: isPresented)
+            }
+        
+        
+            .onChange(of: isPresented) { _, isPresented in
+                if isPresented {
+                    #if DEBUG
+                    _debug_appearCount += 1
+                    #endif
+                    
+                    disappearDate = configuration.disappearDateIfAppearingNow()
+                    
+                    timerStorage = Task {
+                        try? await Task.sleep(until: disappearDate.instant)
+                        wrapUpDisappear()
+                    }
+                }
+                else {
+                    wrapUpDisappear()
+                }
+            }
+            .onDisappear {
+                timerStorage?.cancel()
             }
     }
 }
@@ -192,7 +199,7 @@ private struct Toast: ViewModifier {
 
 private extension Toast {
     
-    func wrapUpDippear() {
+    func wrapUpDisappear() {
         withAnimation(.bouncy) {
             isPresented = false
             timerStorage?.cancel()
@@ -206,7 +213,7 @@ private extension Toast {
         if let cta = configuration.callToAction,
            cta.dismissOnInteraction {
             // If we have a call-to-action, make the toast disappear when the CTA is called
-            return ToastConfiguration(
+            var tweakedConfig = ToastConfiguration(
                 text: configuration.text,
                 duration: configuration.duration,
                 icon: configuration.icon,
@@ -219,6 +226,10 @@ private extension Toast {
                     }
                 )
             )
+            
+            tweakedConfig.id = configuration.id
+            
+            return tweakedConfig
         }
         else {
             return configuration

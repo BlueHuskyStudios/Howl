@@ -11,10 +11,6 @@ import RectangleTools
 
 
 
-private let cornerRadius: CGFloat = 12
-
-
-
 /// A toast style like the classic square notifications that Apple devices have shown over the years.
 ///
 /// This was once the default style to display volume changes on OS X and iOS, and is still how Xcode displays build notifications.
@@ -22,7 +18,6 @@ private let cornerRadius: CGFloat = 12
 /// This displays the bezel inside a view. If you want it to display for the whole OS, on top of all windows, use ``SystemBezelToastStyle`` instead (only available on macOS).
 public struct BezelToastStyle: ToastStyle {
     
-    private let shape = RoundedRectangle(cornerRadius: cornerRadius)
     
     public let effect: Effect?
     
@@ -186,7 +181,7 @@ private extension BezelToastStyle {
         environment: EnvironmentValues,
         content: () -> Content)
     -> some View {
-        bezelBasis
+        bezelBasis(parameters: parameters)
             .frame(width: environment.dynamicTypeSize.isAccessibilitySize ? nil : parameters.size.cgSize.width,
                    height: parameters.size.cgSize.height)
 //            .frame(maxWidth: environment.dynamicTypeSize.isAccessibilitySize ? 50 : parameters.size.cgSize.width)
@@ -200,18 +195,18 @@ private extension BezelToastStyle {
                 .compositingGroup()
                 .blendMode(bestForegroundBlendMode(in: environment.colorScheme))
             }
-            .clipShape(RoundedRectangle(cornerRadius: BezelNotificationParameters.defaultCornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: parameters.cornerRadius))
     }
     
     
     @ViewBuilder
-    private var bezelBasis: some View {
+    private func bezelBasis(parameters: BezelNotificationParameters) -> some View {
         switch effect {
         case .liquidGlass,
                 .none:
             if #available(macOS 26, iOS 26, *) {
                 Rectangle()
-                    .glassEffect(in: RoundedRectangle(cornerRadius: BezelNotificationParameters.defaultCornerRadius))
+                    .glassEffect(in: RoundedRectangle(cornerRadius: parameters.cornerRadius))
             }
             else {
                 Rectangle()

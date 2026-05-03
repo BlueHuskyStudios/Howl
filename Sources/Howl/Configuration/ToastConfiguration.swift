@@ -20,7 +20,7 @@ public struct ToastConfiguration {
     /// This allows us to track changes across otherwise-identical toast configurations.
     ///
     /// This does run the risk that, if SwiftUI decides to initialize the same toast configuration many times, we get many UUIDs. This field hedges its bets that this will be okay.
-    private let id = UUID()
+    internal var id = UUID() // internal so we can keep it consistent if we have to tweak the config before building a toast
     
     /// The text to display inside the toast
     public let text: AttributedString

@@ -61,7 +61,7 @@ internal extension ToastStyle.Configuration {
     func disappearDate(appearingAt appearDate: Date) -> Date {
         max(
             actualDuration.disappearDate(appearingAt: appearDate),
-            earliestDateForCallToAction(appearingAt: appearDate)
+            earliestDisappearDateAccountingForCallToAction(appearingAt: appearDate)
         )
     }
     
@@ -71,11 +71,11 @@ internal extension ToastStyle.Configuration {
     }
     
     
-    private func earliestDateForCallToAction(appearingAt appearDate: Date) -> Date {
+    private func earliestDisappearDateAccountingForCallToAction(appearingAt appearDate: Date) -> Date {
         if let callToAction {
             let labelLength = callToAction.label.count
             let extraReadingTime: TimeInterval = .init(labelLength) * 0.1
-            return .now + .seconds(min(30, 3 + extraReadingTime))
+            return appearDate + .seconds(min(30, 3 + extraReadingTime))
         }
         else {
             return appearDate

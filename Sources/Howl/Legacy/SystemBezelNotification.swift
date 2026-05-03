@@ -1,10 +1,9 @@
 //
 //  SystemBezelNotification.swift
-//  Bezel Notification
+//  Howl
 //
 //  Created by Ky Leggiero on 2017-11-09.
 //  Version 2 created by Ky Leggiero on 2022-02-12.
-//  Copyright © 2022 Ky Leggiero BH-1-PS
 //
 
 #if !canImport(AppKit)

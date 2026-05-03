@@ -1,9 +1,8 @@
 //
 //  CGContext Extensions.swift
-//  BH Bezel Notification
+//  Howl
 //
 //  Created by Ky Leggiero on 2017-11-10.
-//  Copyright © 2017 Ky Leggiero. All rights reserved.
 //
 
 import CoreGraphics

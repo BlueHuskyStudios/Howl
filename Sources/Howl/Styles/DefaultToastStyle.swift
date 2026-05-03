@@ -18,6 +18,6 @@ public typealias DefaultToastStyle = BezelToastStyle
 
 
 public extension ToastStyle where Self == DefaultToastStyle {
-    /// A reasonable default taost style. This might change across versions and platforms.
+    /// A reasonable default toast style. This might change across versions and platforms.
     static var `default`: Self { .init() }
 }

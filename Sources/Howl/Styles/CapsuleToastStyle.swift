@@ -32,12 +32,10 @@ public struct CapsuleToastStyle: ToastStyle {
                                     .fill(.ultraThinMaterial.blendMode(.multiply))
                             }
                         }
-//                        .zIndex(1)
                     
                     if let action = configuration.callToAction {
                         ctaButton(action: action)
                             .transition(.move(edge: .leading).combined(with: .opacity).animation(.bouncy))
-//                            .zIndex(0)
                     }
                 }
                 .shadow(radius: 6, y: 2)
@@ -51,7 +49,6 @@ public struct CapsuleToastStyle: ToastStyle {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .geometryGroup()
-//        .transition(.move(edge: .bottom).animation(.bouncy(duration: 0.3)))
     }
     
     

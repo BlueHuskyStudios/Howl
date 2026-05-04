@@ -96,15 +96,15 @@ internal extension ToastStyle.Configuration {
             actualDuration.disappearDate(appearingAt: appearDate),
             
             appearDate
-                + additionalTimeAccountingForLabel()
+                + additionalTimeAccountingForBodyText()
                 + additionalTimeAccountingForCallToAction()
         )
     }
     
     
     /// How much additional time the toast should be shown, based on how long its main body text is
-    private func additionalTimeAccountingForLabel() -> Swift.Duration {
-        let bodyLength = self.text.description.count
+    private func additionalTimeAccountingForBodyText() -> Swift.Duration {
+        let bodyLength = max(0, self.text.characters.count)
         let bodyReadingTime: TimeInterval = .init(bodyLength) * english_slowestAverageSpeechSecondsPerLetter_halved
         return .seconds(min(
             maxAdditionalSecondsPerFactor,

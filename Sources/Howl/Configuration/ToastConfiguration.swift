@@ -118,6 +118,11 @@ public extension ToastConfiguration {
     /// It's not guaranteed that a user will interact with a CTA. Toasts don't have to have them, but even when they do, a toast might disappear automatically or be dismissed in some other way manually. It's best make this an _optional_ action; **avoid assuming** the user can/must perform the presented action.
     struct CallToAction {
         
+        /// This allows us to track changes across otherwise-identical toast configurations.
+        ///
+        /// This does run the risk that, if SwiftUI decides to initialize the same toast configuration many times, we get many UUIDs. This field hedges its bets that this will be okay.
+        private var id = UUID() // internal so we can keep it consistent if we have to tweak the config before building a toast
+        
         /// This is presented as the user, briefly describing what action will be taken.
         ///
         /// It's best to keep this to one word if possible, like "Okay", "Undo", or "Dismiss".
@@ -143,7 +148,7 @@ public extension ToastConfiguration {
 
 extension ToastConfiguration.CallToAction: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.hashValue == rhs.hashValue
+        lhs.id == rhs.id
     }
 }
 
@@ -151,8 +156,7 @@ extension ToastConfiguration.CallToAction: Equatable {
 
 extension ToastConfiguration.CallToAction: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(label)
-        hasher.combine(withUnsafePointer(to: userDidInteract, echo))
+        hasher.combine(id)
     }
 }
 
@@ -175,6 +179,14 @@ extension ToastConfiguration: Hashable {
 
 extension ToastConfiguration: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.hashValue == rhs.hashValue
+        lhs.text == rhs.text
+        && lhs.icon == rhs.icon
+        && lhs.duration == rhs.duration
+        && lhs.callToAction == rhs.callToAction
+    }
+    
+    
+    public static func === (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }

@@ -51,10 +51,27 @@ This is designed to strike a balance between ease-of-use and customizability. Fo
 
 ```swift
 myView
-    .toast(isPresented: $isLoading, text: "Link copied")
+    .toast(isPresented: $showLinkCopiedToast, text: "Link copied")
 ```
 
 You can also specify an icon, a duration, and a call-to-action. Different toast styles may choose to omit icons andor calls-to-action.
+
+
+```swift
+myView
+    .toast(
+        // These are required fields:
+        isPresented: $showDraftSavedToast,
+        text: "Message saved to draft",
+        
+        // These are optional fields:
+        duration: .importantText,
+        icon: Image(systemName: "tray.and.arrow.down"),
+        action: .init(label: "Show drafts") {
+            openDrafts()
+        }
+    )
+```
 
 
 ### ⏲️ Duration
@@ -65,9 +82,11 @@ All toasts let you say how long they show. There are currently three options:
 - `importantText` is for toasts which explain something important to the user
 - `manualDismiss` leaves the toast on-screen forever. The dev can dismiss them arbitrarily, and toasts which allow the user to dismiss them can be dismissed by the user.
 
+> ℹ️ Aside from `manualDismiss`, the durations above aren't tied to actual time intervals. Avoid assuming that any one of these means any specific amount of time. The actual time interval that a toast is shown on-screen varies depending on factors like whether or not it's presenting a call-to-action, and might also change across versions.
+
 ```swift
 myView
-    .toast(isPresented: $showSavedToast, text: "Saved", duration: .actionFeedback)
+    .toast(isPresented: $showDownloadCompleteToast, text: "Download complete", duration: .actionFeedback)
 ```
 ```swift
 myView

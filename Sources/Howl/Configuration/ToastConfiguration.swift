@@ -38,7 +38,11 @@ public struct ToastConfiguration {
     public let callToAction: CallToAction?
     
     
-    init(text: AttributedString, duration: Duration?, icon: Image?, callToAction: CallToAction?) {
+    public init(text: AttributedString,
+                duration: Duration? = nil,
+                icon: Image? = nil,
+                callToAction: CallToAction? = nil)
+    {
         self.text = text
         self.duration = duration
         self.icon = icon
@@ -46,7 +50,10 @@ public struct ToastConfiguration {
     }
     
     
-    init<ToastText>(text: ToastText, duration: Duration?, icon: Image?, callToAction: CallToAction?)
+    public init<ToastText>(text: ToastText,
+                           duration: Duration? = nil,
+                           icon: Image? = nil,
+                           callToAction: CallToAction? = nil)
     where ToastText: StringProtocol
     {
         self.init(text: AttributedString(text),
@@ -65,7 +72,8 @@ public extension ToastConfiguration {
     /// How long to display a toast on-screen.
     ///
     /// This is a semantic value, not a temporal one; use this to describe the general content of the toast, and the duration will be calculated when it needs to be shown.
-    /// The actual amount of seconds that the toast appears might vary.
+    ///
+    /// - Attention: Aside from `manualDismiss`, these durations aren't tied to actual time intervals. Avoid assuming that any one of these means any specific amount of time. The actual time interval that a toast is shown on-screen varies depending on factors like whether or not it's presenting a call-to-action, and might also change across versions.
     enum Duration {
         
         /// The toast is being shown for a brief moment to confirm that an action occurred, only remaining long enough to allow the user to read a couple words.

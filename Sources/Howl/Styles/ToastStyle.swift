@@ -52,33 +52,82 @@ public extension ToastStyle {
 
 
 
+// MARK: - Disappear date calculations
+
+/// The average number of letters in an English word
+///
+/// https://arxiv.org/abs/1208.6109
+private let english_averageLettersPerWord: CGFloat = 5
+
+/// The average number of English words that a human can speak in a minute
+///
+/// https://tfcs.baruch.cuny.edu/speaking-rate/
+private let english_slowestAverageSpeechWpm: CGFloat = 100
+
+private let english_slowestAverageSpeechLettersPerMinute = english_averageLettersPerWord * english_slowestAverageSpeechWpm
+private let english_slowestAverageSpeechLettersPerSecond = english_slowestAverageSpeechLettersPerMinute / 60
+private let english_slowestAverageSpeechSecondsPerLetter = 1 / english_slowestAverageSpeechLettersPerSecond
+private let english_slowestAverageSpeechSecondsPerLetter_halved = english_slowestAverageSpeechSecondsPerLetter / 2
+
+private let additionalSecondsToNoticeToast: CGFloat = 1
+private let additionalSecondsToNoticeCallToAction: CGFloat = 2
+
+private let maxAdditionalSecondsPerFactor: CGFloat = 30
+
+
+
 internal extension ToastStyle.Configuration {
-    func disappearDateIfAppearingNow() -> Date {
-        disappearDate(appearingAt: .now)
-    }
     
-    
-    func disappearDate(appearingAt appearDate: Date) -> Date {
-        max(
-            actualDuration.disappearDate(appearingAt: appearDate),
-            earliestDisappearDateAccountingForCallToAction(appearingAt: appearDate)
-        )
-    }
-    
-    
+    /// The `duration` value to use, regardless of what the dev specified in `.toast(...`.
     var actualDuration: Duration {
         duration ?? .default
     }
     
     
-    private func earliestDisappearDateAccountingForCallToAction(appearingAt appearDate: Date) -> Date {
+    /// The date at which a toast with this configuration should disappear, assuming it's appearing the moment this function is called
+    func disappearDateIfAppearingNow() -> Date {
+        disappearDate(appearingAt: .now)
+    }
+    
+    
+    /// The date at which a toast with this configuration should disappear, assuming it's appearing at the given date
+    func disappearDate(appearingAt appearDate: Date) -> Date {
+        max(
+            actualDuration.disappearDate(appearingAt: appearDate),
+            
+            appearDate
+                + additionalTimeAccountingForBodyText()
+                + additionalTimeAccountingForCallToAction()
+        )
+    }
+    
+    
+    /// How much additional time the toast should be shown, based on how long its main body text is
+    private func additionalTimeAccountingForBodyText() -> Swift.Duration {
+        let bodyLength = max(0, self.text.characters.count)
+        let bodyReadingTime: TimeInterval = .init(bodyLength) * english_slowestAverageSpeechSecondsPerLetter_halved
+        return .seconds(min(
+            maxAdditionalSecondsPerFactor,
+            additionalSecondsToNoticeToast
+                + bodyReadingTime
+        ))
+    }
+    
+    
+    /// How much additional time the toast should be shown, based on its CTA value
+    private func additionalTimeAccountingForCallToAction() -> Swift.Duration {
         if let callToAction {
             let labelLength = callToAction.label.count
-            let extraReadingTime: TimeInterval = .init(labelLength) * 0.1
-            return appearDate + .seconds(min(30, 3 + extraReadingTime))
+            let labelReadingTime: TimeInterval = .init(labelLength) * english_slowestAverageSpeechSecondsPerLetter
+            return .seconds(min(
+                maxAdditionalSecondsPerFactor,
+                additionalSecondsToNoticeToast
+                    + additionalSecondsToNoticeCallToAction
+                    + labelReadingTime
+            ))
         }
         else {
-            return appearDate
+            return .zero
         }
     }
 }
@@ -86,6 +135,10 @@ internal extension ToastStyle.Configuration {
 
 
 internal extension ToastStyle.Configuration.Duration {
+    
+    /// The ideal date at which a toast of this duration should disappear, assuming it appeares at the given date
+    ///
+    /// - Parameter appearDate: The date the toast will have appeared
     func disappearDate(appearingAt appearDate: Date) -> Date {
         switch self {
         case .actionFeedback,
@@ -98,6 +151,7 @@ internal extension ToastStyle.Configuration.Duration {
     }
     
     
+    /// The number of seconds that the toast should appear on-screen
     var inSeconds: TimeInterval {
         switch self {
         case .actionFeedback: 2.5
@@ -108,6 +162,7 @@ internal extension ToastStyle.Configuration.Duration {
     
     
     
+    /// This duration is safe to use if no other duration is specified
     static let `default` = actionFeedback
 }
 

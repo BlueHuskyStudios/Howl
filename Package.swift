@@ -17,7 +17,7 @@ let package = Package(
             targets: ["Howl"]),
         .library(
             name: "BezelNotification",
-            targets: ["Howl"]),
+            targets: ["BezelNotification"]),
     ],
     dependencies: [
         .package(name: "CrossKitTypes",  url: "https://github.com/RougeWare/Swift-Cross-Kit-Types.git", from: "1.0.0"),
@@ -34,6 +34,10 @@ let package = Package(
                 "FunctionTools",
                 "RectangleTools",
             ]),
+        
+        .target(
+            name: "BezelNotification",
+            dependencies: [.target(name: "Howl")]),
         
         .testTarget(
             name: "HowlTests",

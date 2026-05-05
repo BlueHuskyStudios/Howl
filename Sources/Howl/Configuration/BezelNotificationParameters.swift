@@ -42,49 +42,49 @@ public struct BezelNotificationParameters {
     // MARK: Basics
     
     /// The text to show in the bezel notification's message area
-    var messageText: String
+    internal var messageText: String
     
     /// The icon to show in the bezel notification's icon area
-    var icon: NativeImage?
+    internal var icon: NativeImage?
     
     
     // MARK: Presentation
     
     /// The location on the screen at which to display the bezel notification
-    var location: Location
+    internal var location: Location
     
     /// The size of the bezel notification
-    var size: Size
+    internal var size: Size
     
     /// The number of seconds to display the bezel notification on the screen
-    var timeToLive: TimeToLive
+    internal var timeToLive: TimeToLive
     
     
     // MARK: Animations
     
     /// The number of seconds that it takes to fade in the bezel notification
-    var fadeInAnimationDuration: TimeInterval
+    internal var fadeInAnimationDuration: TimeInterval
     
     /// The number of seconds that it takes to fade out the bezel notification
-    var fadeOutAnimationDuration: TimeInterval
+    internal var fadeOutAnimationDuration: TimeInterval
     
     
     // MARK: Drawing
     
     /// The radius of the bezel notification's corners, in points
-    var cornerRadius: CGFloat
+    internal var cornerRadius: CGFloat
     
     /// The tint of the bezel notification's background
-    var rawBackgroundTint: NativeColor
+    internal var rawBackgroundTint: NativeColor
     
     /// The distance from the bottom of the bezel notification at which the baseline of the message label sits
-    var messageLabelBaselineOffsetFromBottomOfBezel: CGFloat
+    internal var messageLabelBaselineOffsetFromBottomOfBezel: CGFloat
     
     /// The font used for the message label
-    var messageLabelFont: NativeFont
+    internal var messageLabelFont: NativeFont
     
     /// The text color of the message label
-    var messageLabelColor: NativeColor
+    internal var messageLabelColor: NativeColor
     
     
     public init(messageText: String,

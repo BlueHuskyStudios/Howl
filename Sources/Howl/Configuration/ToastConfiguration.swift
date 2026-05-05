@@ -38,7 +38,11 @@ public struct ToastConfiguration {
     public let callToAction: CallToAction?
     
     
-    init(text: AttributedString, duration: Duration?, icon: Image?, callToAction: CallToAction?) {
+    public init(text: AttributedString,
+                duration: Duration? = nil,
+                icon: Image? = nil,
+                callToAction: CallToAction? = nil)
+    {
         self.text = text
         self.duration = duration
         self.icon = icon
@@ -46,7 +50,10 @@ public struct ToastConfiguration {
     }
     
     
-    init<ToastText>(text: ToastText, duration: Duration?, icon: Image?, callToAction: CallToAction?)
+    public init<ToastText>(text: ToastText,
+                           duration: Duration? = nil,
+                           icon: Image? = nil,
+                           callToAction: CallToAction? = nil)
     where ToastText: StringProtocol
     {
         self.init(text: AttributedString(text),
@@ -65,7 +72,8 @@ public extension ToastConfiguration {
     /// How long to display a toast on-screen.
     ///
     /// This is a semantic value, not a temporal one; use this to describe the general content of the toast, and the duration will be calculated when it needs to be shown.
-    /// The actual amount of seconds that the toast appears might vary.
+    ///
+    /// - Attention: Aside from `manualDismiss`, these durations aren't tied to actual time intervals. Avoid assuming that any one of these means any specific amount of time. The actual time interval that a toast is shown on-screen varies depending on factors like whether or not it's presenting a call-to-action, and might also change across versions.
     enum Duration {
         
         /// The toast is being shown for a brief moment to confirm that an action occurred, only remaining long enough to allow the user to read a couple words.
@@ -110,6 +118,11 @@ public extension ToastConfiguration {
     /// It's not guaranteed that a user will interact with a CTA. Toasts don't have to have them, but even when they do, a toast might disappear automatically or be dismissed in some other way manually. It's best make this an _optional_ action; **avoid assuming** the user can/must perform the presented action.
     struct CallToAction {
         
+        /// This allows us to track changes across otherwise-identical toast configurations.
+        ///
+        /// This does run the risk that, if SwiftUI decides to initialize the same toast configuration many times, we get many UUIDs. This field hedges its bets that this will be okay.
+        private var id = UUID() // internal so we can keep it consistent if we have to tweak the config before building a toast
+        
         /// This is presented as the user, briefly describing what action will be taken.
         ///
         /// It's best to keep this to one word if possible, like "Okay", "Undo", or "Dismiss".
@@ -135,7 +148,7 @@ public extension ToastConfiguration {
 
 extension ToastConfiguration.CallToAction: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.hashValue == rhs.hashValue
+        lhs.id == rhs.id
     }
 }
 
@@ -143,8 +156,7 @@ extension ToastConfiguration.CallToAction: Equatable {
 
 extension ToastConfiguration.CallToAction: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(label)
-        hasher.combine(withUnsafePointer(to: userDidInteract, echo))
+        hasher.combine(id)
     }
 }
 
@@ -167,6 +179,14 @@ extension ToastConfiguration: Hashable {
 
 extension ToastConfiguration: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.hashValue == rhs.hashValue
+        lhs.text == rhs.text
+        && lhs.icon == rhs.icon
+        && lhs.duration == rhs.duration
+        && lhs.callToAction == rhs.callToAction
+    }
+    
+    
+    public static func === (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }

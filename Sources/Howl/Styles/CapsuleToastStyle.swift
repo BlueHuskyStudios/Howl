@@ -11,6 +11,9 @@ import RectangleTools
 
 
 
+/// A toast style where a wide capsule shape appears in the lower-center of the view.
+///
+/// This is similar to the classic Android system toast style.
 public struct CapsuleToastStyle: ToastStyle {
     
     public func body(_ configuration: Configuration, environment _: EnvironmentValues) -> some View {
@@ -70,6 +73,10 @@ public struct CapsuleToastStyle: ToastStyle {
 
 
 public extension ToastStyle where Self == CapsuleToastStyle {
+    
+    /// A toast style where a wide capsule shape appears in the lower-center of the screen.
+    ///
+    /// This is similar to the classic Android system toast style.
     static var capsule: Self { Self.init() }
 }
 

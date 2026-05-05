@@ -9,6 +9,9 @@ import SwiftUI
 
 
 
+/// A toast style where a rounded rectangle shape appears in the lower-left corner of the view.
+///
+/// This is similar to the kind of bottom-left notifications you'd see in many websites and Android apps.
 public struct SnackbarToastStyle: ToastStyle {
     
     private let shape = RoundedRectangle(cornerRadius: 8)
@@ -112,6 +115,10 @@ private extension SnackbarToastStyle {
 
 
 public extension ToastStyle where Self == SnackbarToastStyle {
+    
+    /// A toast style where a rounded rectangle shape appears in the lower-left corner of the view.
+    ///
+    /// This is similar to the kind of bottom-left notifications you'd see in many websites and Android apps.
     static var snackbar: Self { Self.init() }
 }
 

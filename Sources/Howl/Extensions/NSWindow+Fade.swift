@@ -152,7 +152,7 @@ internal extension NSWindow {
 public extension CAMediaTimingFunction {
     static let easeIn = CAMediaTimingFunction(name: .easeIn)
     static let easeOut = CAMediaTimingFunction(name: .easeOut)
-    static let easenInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
+    static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
     static let linear = CAMediaTimingFunction(name: .linear)
     static let `default` = CAMediaTimingFunction(name: .default)
 }

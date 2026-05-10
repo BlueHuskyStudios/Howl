@@ -208,7 +208,7 @@ private extension Toast {
     }
     
     
-    /// Modifies the dev-specified configuration as-needed
+    /// Creates a copy of the dev-specified configuration, but modified as-needed to properly be used for building a toast.
     var actualConfiguration: ToastConfiguration {
         if let cta = configuration.callToAction,
            cta.dismissOnInteraction {

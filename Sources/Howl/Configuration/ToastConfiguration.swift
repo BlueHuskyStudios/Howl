@@ -184,9 +184,4 @@ extension ToastConfiguration: Equatable {
         && lhs.duration == rhs.duration
         && lhs.callToAction == rhs.callToAction
     }
-    
-    
-    public static func === (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
 }

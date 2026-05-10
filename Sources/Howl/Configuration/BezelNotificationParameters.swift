@@ -156,23 +156,7 @@ public extension BezelNotificationParameters {
 
 
 
-extension BezelNotificationParameters.TimeToLive: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        switch self {
-        case .short:
-            hasher.combine("\(Self.self).__PREDEFINED__.short")
-            
-        case .long:
-            hasher.combine("\(Self.self).__PREDEFINED__.long")
-            
-        case .forever:
-            hasher.combine("\(Self.self).__PREDEFINED__.forever")
-            
-        case .exactly(let seconds):
-            hasher.combine("\(Self.self).exactly(seconds: \(seconds))")
-        }
-    }
-}
+extension BezelNotificationParameters.TimeToLive: Hashable {}
 
 
 

@@ -15,8 +15,26 @@
         "repositoryURL": "https://github.com/RougeWare/Swift-Function-Tools.git",
         "state": {
           "branch": null,
-          "revision": "0bd76ca2c00120acf7ff840b5dcc1e700870ae22",
-          "version": "1.2.3"
+          "revision": "0cc2083f05dc12fa70451985c0c3390e63b468ed",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "MultiplicativeArithmetic",
+        "repositoryURL": "https://github.com/RougeWare/Swift-MultiplicativeArithmetic.git",
+        "state": {
+          "branch": null,
+          "revision": "c45199953ac680dfdcaefff5f8743f1126fe8a4e",
+          "version": "2.0.1"
+        }
+      },
+      {
+        "package": "RectangleTools",
+        "repositoryURL": "https://github.com/RougeWare/Swift-Rectangle-Tools",
+        "state": {
+          "branch": null,
+          "revision": "dd8eba41360e39c74159d7a1ef9496efc6fefc40",
+          "version": "2.17.1"
         }
       }
     ]

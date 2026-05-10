@@ -121,7 +121,7 @@ public extension ToastConfiguration {
         /// This allows us to track changes across otherwise-identical toast configurations.
         ///
         /// This does run the risk that, if SwiftUI decides to initialize the same toast configuration many times, we get many UUIDs. This field hedges its bets that this will be okay.
-        private var id = UUID() // internal so we can keep it consistent if we have to tweak the config before building a toast
+        internal var id = UUID() // internal so we can keep it consistent if we have to tweak the config before building a toast
         
         /// This is presented as the user, briefly describing what action will be taken.
         ///
@@ -183,10 +183,5 @@ extension ToastConfiguration: Equatable {
         && lhs.icon == rhs.icon
         && lhs.duration == rhs.duration
         && lhs.callToAction == rhs.callToAction
-    }
-    
-    
-    public static func === (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
     }
 }

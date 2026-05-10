@@ -208,23 +208,28 @@ private extension Toast {
     }
     
     
-    /// Modifies the dev-specified configuration as-needed
+    /// Creates a copy of the dev-specified configuration, but modified as-needed to properly be used for building a toast.
     var actualConfiguration: ToastConfiguration {
         if let cta = configuration.callToAction,
            cta.dismissOnInteraction {
             // If we have a call-to-action, make the toast disappear when the CTA is called
+            var tweakedCallToAction = ToastConfiguration.CallToAction(
+                label: cta.label,
+                dismissOnInteraction: cta.dismissOnInteraction,
+                userDidInteract: {
+                    isPresented = false
+                    cta.userDidInteract()
+                }
+            )
+            
+            tweakedCallToAction.id = cta.id
+            
+            
             var tweakedConfig = ToastConfiguration(
                 text: configuration.text,
                 duration: configuration.duration,
                 icon: configuration.icon,
-                callToAction: .init(
-                    label: cta.label,
-                    dismissOnInteraction: cta.dismissOnInteraction,
-                    userDidInteract: {
-                        isPresented = false
-                        cta.userDidInteract()
-                    }
-                )
+                callToAction: tweakedCallToAction
             )
             
             tweakedConfig.id = configuration.id
@@ -275,7 +280,3 @@ private extension Toast {
     }
 }
 #endif
-
-
-
-// MARK: - ToastPreview

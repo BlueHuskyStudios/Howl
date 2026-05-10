@@ -181,7 +181,7 @@ The legacy of this package is its ability to show "bezel notifications" which lo
 
 Version 3 of this package focuses more on in-app toasts, but it does indeed preserve and actively maintain the original functionality, just renamed from `BHBezelNotification` to `SystemBezelNotification` and moved from direct usage to the same API as all the new toast styles. Just use `.toastStyle(.systemBezel)`, and the same `.toast(...` API that all toasts use!
 
-Of course, because of how system bezels work, they're only available on macOS. Other platforms cannot use it, but they can still use the Bezel style, which mimics the same style but constrained within an view. 
+Of course, because of how system bezels work, they're only available on macOS. Other platforms cannot use it, but they can still use the Bezel style, which mimics the same style but constrained within a view. 
 
 
 
@@ -253,7 +253,7 @@ All you have to do is create a `struct` which implements the `ToastStyle` protoc
 ```swift
 struct MyToastStyle: ToastStyle {
     
-    func body(_ configuration: Configuration) -> some View {
+    func body(_ configuration: Configuration, environment: EnvironmentValues) -> some View {
         Text(configuration.text)
             .foregroundStyle(.black)
             .background(Color.pink.blendMode(.plusLighter))
@@ -269,8 +269,6 @@ extension ToastStyle where Self == MyToastStyle {
     static var mine: Self { .init() }
 }
 ``` 
-
-All these parameters (aside from the callback) can be encapsulated in a `BezelNotificationParameters` object. This is useful for keeping pre-defined bezels, serializing them for user-customization, etc.
 
 > ℹ️ Be aware that this is _not_ run within the SwiftUI framework. It must build a SwiftUI view in its `body` (which _will_ be rendered within SwiftUI), and that body function will be passed the current environment values in case it needs them.
 > If you need to use things like `@State` or `@EnvironmentObject` fields, you can use a custom SwiftUI view somewhere inside the view built by the `body` function, and inside that custom view you may use `@State` and all other SwiftUI paradigms.

@@ -153,6 +153,10 @@ public extension CAMediaTimingFunction {
     static let easeIn = CAMediaTimingFunction(name: .easeIn)
     static let easeOut = CAMediaTimingFunction(name: .easeOut)
     static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
+
+    /// @deprecated Renamed to `easeInEaseOut` (typo fix from PR #30)
+    @available(*, deprecated, renamed: "easeInEaseOut", message: "This typo was fixed by PR #30")
+    static let easenInEaseOut = easeInEaseOut
     static let linear = CAMediaTimingFunction(name: .linear)
     static let `default` = CAMediaTimingFunction(name: .default)
 }

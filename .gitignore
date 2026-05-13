@@ -43,3 +43,7 @@ xcuserdata
 Carthage/Build
 
 \.DS_Store
+
+.build/
+
+.swiftpm/

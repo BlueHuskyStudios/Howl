@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -34,6 +34,14 @@ let package = Package(
                 "FunctionTools",
                 "RectangleTools",
             ]),
+        
+        .executableTarget(
+            name: "howl-cli",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Howl", package: "Howl"),
+            ]
+        ),
         
         .target(
             name: "BezelNotification",
